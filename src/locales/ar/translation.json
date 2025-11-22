@@ -1,0 +1,1208 @@
+{
+  "lang": "ar",
+  "dir": "rtl",
+
+  "brand": {
+    "name": "حجوزات الصالون",
+    "tag": "تزيين نسائي"
+  },
+
+  "nav": {
+    "home": "الرئيسية",
+    "sections": "الأقسام",
+    "book": "احجز",
+    "prices": "قائمة الأسعار",
+    "offers": "العروض",
+    "homeServices": "الخدمات المنزلية",
+    "hours": "ساعات العمل",
+    "complaints": "الشكاوي",
+    "about": "من نحن",
+    "contact": "تواصل معنا",
+    "reviews": "التقييمات"
+  },
+
+  "cta": {
+    "bookNow": "احجز الآن"
+  },
+
+  "search": {
+    "services": "ابحث عن الخدمات"
+  },
+
+  "hero": {
+    "title": "تألّقي بإطلالة مميزة",
+    "subtitle": "احجزي أفضل خبيرات التجميل والسبا بالقرب منك بكل سهولة."
+  },
+
+  "sections": {
+    "hair": "الشعر",
+    "nails": "الأظافر",
+    "makeup": "المكياج",
+    "spa": "السبا"
+  },
+
+  "prices": {
+    "title": "قائمة الأسعار",
+    "note": "الأسعار شاملة ضريبة القيمة المضافة",
+    "searchPlaceholder": "بحث عن الخدمات",
+    "sampleItem": "خدمة تجريبية — 100 ر.س",
+    "categories": {
+      "hair": "قسم قص الشعر",
+      "nails": "قسم الأظافر",
+      "hairTreatments": "علاجات الشعر",
+      "body": "العناية بالجسم",
+      "dyeCare": "قسم الصبغات والعناية بالشعر",
+      "facial": "العناية بالوجه",
+      "makeup": "قسم المكياج",
+      "consultation": "قسم الاستشوار",
+      "kids": "الخدمات الصغيرة",
+      "salonName": "صالون {{salonName}}"
+    }
+  },
+
+  "home": {
+    "location": "الرياض - السعودية / Riyadh, Saudi",
+    "buttons": {
+      "book": { "primary": "احجز", "secondary": "Book" },
+      "prices": { "primary": "قائمة الأسعار", "secondary": "Prices" , "salonName": "صالون {{salonName}}" },
+      "offers": { "primary": "العروض", "secondary": "Offers" },
+      "homeServices": { "primary": "الخدمات المنزلية", "secondary": "Home Services" },
+      "workingHours": { "primary": "ساعات العمل", "secondary": "Working hours" },
+      "complaints": { "primary": "الشكاوى", "secondary": "Complaints" }
+    }
+  },
+
+  "book": {
+    "title": "احجز موعدًا",
+    "subtitle": "املأ بياناتك وسنؤكد الحجز قريبًا.",
+    "name": "الاسم",
+    "phone": "الجوال",
+    "service": "الخدمة",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "submit": "احجز الآن",
+    "linkedServiceUnavailable": "هذه الخدمة غير متوفرة حاليًا.",
+    "success": "تم إرسال الحجز بنجاح!",
+    "successDesc": "سنتواصل معك قريبًا لتأكيد التفاصيل.",
+    "placeholder": {
+      "date": "يوم/شهر/سنة",
+      "time": "--:--"
+    },
+    "chooseService": "اختر الخدمة",
+    "loadingServices": "جارٍ تحميل الخدمات...",
+    "loadingLinkedService": "جارٍ تحميل الخدمة المختارة...",
+    "chooseDateTime": "اختر التاريخ والوقت",
+    "availableTimes": "الأوقات المتاحة",
+    "chooseServiceFirst": "اختر خدمة أولاً لعرض الأوقات المتاحة.",
+    "loadingSlots": "جارٍ تحديث الأوقات...",
+    "closed": "الصالون مغلق في هذا اليوم.",
+    "noSlots": "لا توجد أوقات متاحة في هذا اليوم.",
+    "slotStrategyInfo": "طريقة اختيار الأوقات: {strategy}",
+    "personalInfo": "المعلومات الشخصية والعنوان",
+    "termsNote": "بالنقر على 'تأكيد الحجز'، فإنك توافق على شروط الخدمة وسياسة الخصوصية.",
+    "validationFailed": "يرجى إكمال الحقول المطلوبة قبل تأكيد الحجز.",
+    "missingSalon": "معرف الصالون غير متوفر.",
+    "serviceMissing": "اختر خدمة قبل المتابعة.",
+    "booking": "جاري الحجز...",
+    "confirm": "تأكيد الحجز",
+    "bookingFailed": "فشل إرسال الحجز.",
+    "bookingConflict": "الوقت الذي اخترته لم يعد متاحًا؛ يرجى اختيار وقت آخر.",
+    "successDescHome": "سنتواصل معك قريبًا لتأكيد حجز الخدمة المنزلية.",
+    "statusPending": "قيد المراجعة",
+    "newBooking": "احجز خدمة أخرى",
+    "confirmBooking": "تأكيد الحجز",
+    "step1": "الخدمة والموعد",
+    "step2": "المعلومات الشخصية",
+    "step3": "التأكيد",
+    "next": "التالي",
+    "previous": "السابق",
+    "detail": {
+      "service": "الخدمة:",
+      "datetime": "التاريخ والوقت:",
+      "duration": "المدة:",
+      "status": "الحالة:"
+    }
+  },
+  "navigation": {
+    "next": "التالي",
+    "previous": "السابق"
+  },
+
+  "form": {
+    "submitting": "جاري الإرسال…",
+    "err": {
+      "title": "يرجى تصحيح الحقول المحددة.",
+      "name": "يرجى إدخال الاسم الكامل.",
+      "phone": "أدخل رقم جوال صحيح (مثال: +9665XXXXXXXX).",
+      "service": "اختر الخدمة.",
+      "date": "اختر التاريخ.",
+      "time": "اختر الوقت.",
+      "past": "لا يمكن اختيار تاريخ سابق.",
+      "area": "يرجى إدخال المنطقة / الحي.",
+      "address": "يرجى إدخال العنوان بالتفصيل."
+    }
+  },
+
+  "complaints": {
+    "title": "الشكاوى",
+    "name": "الاسم",
+    "mobile": "الموبايل",
+    "details": "التفاصيل",
+    "submit": "إرسال الشكوى",
+    "sent": "تم إرسال الشكوى بنجاح، سنقوم بالتواصل معك قريبًا.",
+    "phonePlaceholder": "5XXXXXXXX"
+  },
+
+  "offers": {
+    "title": "العروض",
+    "subtitle": "عروض محدودة بوقت وأسعار مخفضة.",
+    "searchPlaceholder": "ابحث في العروض…",
+    "all": "الكل",
+    "empty": "لا توجد عروض مطابقة حالياً.",
+    "endsIn": "ينتهي خلال {{d}}ي {{h}}س {{m}}د",
+    "untilFull": "تاريخ انتهاء العرض",
+    "items": {
+      "hairSpa": "جلسة سبا للشعر",
+      "hairSpaDesc": "تنظيف عميق + ترطيب مكثف + تدليك فروة الرأس.",
+      "manicure": "باديكير ومانيكير",
+      "manicureDesc": "تقليم وتنعيم مع طلاء كلاسيك.",
+      "makeup": "مكياج مناسبات",
+      "makeupDesc": "إطلالة كاملة مع رموش.",
+      "spa": "جلسة سبا للجسم",
+      "spaDesc": "ساونا + سكراب + مساج استرخائي."
+    },
+    "booking": {
+      "promptName": "أدخل اسمك الكامل",
+      "promptPhone": "أدخل رقم الجوال",
+      "promptDate": "حدد تاريخ الحجز (yyyy-MM-dd)",
+      "promptTime": "حدد وقت الحجز (HH:MM)",
+      "promptEmail": "البريد الإلكتروني (اختياري)",
+      "promptNotes": "ملاحظات إضافية (اختياري)",
+      "requiredName": "الاسم مطلوب",
+      "requiredPhone": "رقم الجوال مطلوب",
+      "noService": "هذا العرض غير مرتبط بخدمة",
+      "success": "تم استلام طلب الحجز وسنؤكد قريباً.",
+      "failure": "تعذر حجز العرض حالياً. حاول مرة أخرى لاحقاً.",
+      "loading": "جارٍ الحجز..."
+    }
+  },
+
+  "hs": {
+    "title": "الخدمات المنزلية",
+    "subtitle": "نصل إليك أينما كنت بخدمات تجميل وسبا متكاملة.",
+    "area": "المنطقة",
+    "areaNote": "قد يضاف بدل انتقال حسب المسافة.",
+    "search": "البحث",
+    "searchPlaceholder": "ابحث عن خدمة منزلية…",
+    "all": "الكل",
+    "note": "الأسعار تشمل الخدمة في المنزل. قد تختلف المدة حسب نوع الشعر/البشرة.",
+    "empty": "لا توجد نتائج مطابقة.",
+    "bookNow": "احجز خدمة منزلية",
+    "booked": "تمت إضافة الخدمة — سنتواصل معك لتأكيد الموعد.",
+    "bookTitle": "حجز خدمة منزلية",
+    "bookSubtitle": "اختاري الخدمة والتاريخ والعنوان وسنتولى الباقي.",
+    "areaLabel": "المنطقة / الحي",
+    "areaPlaceholder": "مثال: حي العليا، الرياض",
+    "addressLabel": "العنوان التفصيلي",
+    "addressPlaceholder": "المدينة، الشارع، اسم المبنى أو رقمه...",
+    "building": "رقم المبنى / الفيلا",
+    "buildingPlaceholder": "اختياري",
+    "floor": "الدور / الطابق",
+    "floorPlaceholder": "اختياري"
+  },
+
+  "hs.items": {
+    "hairBlow": "سيشوار منزلي",
+    "hairBlowDesc": "غسيل + تجفيف وتصفيف.",
+    "hairColor": "صبغة منزلية",
+    "hairColorDesc": "اختيار اللون المناسب + عناية بعد الصبغ.",
+    "manicure": "مانيكير وباديكير منزلي",
+    "manicureDesc": "تنظيف، تقليم، ترطيب وطلاء.",
+    "eventMU": "مكياج مناسبات منزلي",
+    "eventMUDesc": "إطلالة كاملة مع رموش.",
+    "relaxSpa": "جلسة استرخاء منزلية",
+    "relaxSpaDesc": "مساج + سكراب للجسم."
+  },
+
+  "days": {
+    "sun": "الأحد",
+    "mon": "الإثنين",
+    "tue": "الثلاثاء",
+    "wed": "الأربعاء",
+    "thu": "الخميس",
+    "fri": "الجمعة",
+    "sat": "السبت"
+  },
+
+  "time": {
+    "am": "ص",
+    "pm": "م"
+  },
+
+  "hours": {
+    "title": "ساعات العمل",
+    "subtitle": "قد تتغيّر الساعات في العطل أو المواسم.",
+    "openNow": "مفتوح الآن",
+    "closedNow": "مغلق الآن",
+    "use12h": "تنسيق 12 ساعة",
+    "closed": "مغلق",
+    "openUntil": "مفتوح حتى {{time}}",
+    "nextOpen": "يفتح {{day}}: {{range}}",
+    "note": "ملاحظة: قد تختلف المواعيد في المناسبات الرسمية. للتأكد من التوفر الدقيق يرجى الحجز مسبقًا."
+  },
+
+  "compliment": {
+    "title": "تقييم / شكراً لك",
+    "subtitle": "يسعدنا سماع تجاربك الجميلة واقتراحاتك لتطوير خدماتنا.",
+    "rating": "التقييم",
+    "ratingAria": "تقييم من خمس نجوم",
+    "name": "الاسم",
+    "phone": "الجوال",
+    "phoneNote": "نستخدمه للمتابعة عند الحاجة فقط.",
+    "message": "رسالتك",
+    "photo": "صورة (اختياري)",
+    "consent": "أوافق على استخدام تعليقي بشكل مجهول في التقييمات.",
+    "submit": "إرسال الإطراء",
+    "sending": "جارٍ الإرسال…",
+    "sent": "شكرًا لك! تم استلام رسالتك وسنتواصل عند الحاجة."
+  },
+
+  "sectionsPage": {
+    "title": "الأقسام الرئيسية",
+    "subtitle": "اختاري الخدمة المناسبة لك",
+    "view": "عرض التفاصيل",
+    "loadingTitle": "جاري تحميل الأقسام",
+    "loadingDesc": "نستعد لعرض أفضل الأقسام لك",
+    "errorTitle": "حدث خطأ غير متوقع",
+    "retry": "إعادة المحاولة",
+    "emptyTitle": "لا توجد أقسام حالياً",
+    "emptyDesc": "سنعرضها قريباً",
+    "items": {
+      "hair": {
+        "title": "الشعر",
+        "desc": "قص، تسريحة، سشوار، عناية وفيلر الشعر."
+      },
+      "nails": {
+        "title": "الأظافر",
+        "desc": "تركيب أظافر، مناكير جل، عناية اليدين والقدمين."
+      },
+      "makeup": {
+        "title": "المكياج",
+        "desc": "مكياج مناسبات، مكياج عرائس، جلسات تجميل خاصة."
+      },
+      "spa": {
+        "title": "السبا",
+        "desc": "مساج، عناية البشرة، استرخاء وجلسات عناية فاخرة."
+      },
+      "kids": {
+        "title": "خدمات الأطفال",
+        "desc": "خدمات بسيطة للأطفال بطريقة لطيفة ومريحة."
+      }
+    }
+  },
+
+  "about": {
+    "title": "من نحن",
+    "subtitle": "صالون تجميلي نسائي بخبرة عالية ونهتم بأدق التفاصيل من أول استقبالك حتى النتيجة النهائية.",
+    "storyTitle": "قصتنا",
+    "storyBody": "بدأنا ببساطة: نوفر تجربة تجميل راقية، مريحة، وآمنة لكل سيدة. فريقنا كله من متخصصات محترفات تم اختيارهم بعناية. نؤمن أن الجمال ليس مجرف خدمة سريعة، بل لحظة تقدير لذاتك.",
+    "storyBody2": "نهتم بالنظافة، جودة المنتجات، الراحة، السرعة في الحجز، والشفافية في الأسعار. هدفنا: تطلعي للمرآة وتتبسّمي بكل رضا. 💅✨",
+    "highlightsTitle": "لماذا نحن؟",
+    "point1": "حجز سهل وسريع (أونلاين أو واتساب).",
+    "point2": "فريق نسائي محترف فقط.",
+    "point3": "منتجات جودة عالية ومعقمة وآمنة.",
+    "point4": "قسم خدمات منزلية للراحة التامة.",
+    "point5": "خصوصية واحترام وتجربة ملكية.",
+    "statRating": "متوسط التقييم",
+    "statClients": "عميلة سعيدة",
+    "statYears": "خبرة",
+    "closing": "هدفنا أنك تخرجين واثقة، مرتاحة، ومبتسمة. شكراً لثقتك. "
+  },
+
+  "contact": {
+    "title": "تواصل معنا",
+    "subtitle": "اسألي عن المواعيد، الأسعار، العروض أو أي استفسار. فريقنا موجود لمساعدتك 👇",
+    "locationLabel": "الموقع",
+    "phoneLabel": "الهاتف / واتساب",
+    "phoneValue": "+966 5X XXX XXXX",
+    "hoursLabel": "ساعات العمل",
+    "hoursValue": "يومياً 10 صباحًا - 11 مساءً",
+    "mapLabel": "الموقع على الخريطة",
+    "mapPlaceholder": "خريطة الموقع (يمكن إضافة Google Maps هنا)",
+    "whatsappCTA": "راسلنا على واتساب",
+    "formTitle": "أرسلي رسالة",
+    "formSubtitle": "اسألي عن أي خدمة وسنرد عليك بأقرب وقت.",
+    "name": "الاسم",
+    "phone": "رقم الجوال",
+    "msg": "رسالتك / سؤالك",
+    "sending": "جاري الإرسال...",
+    "submit": "إرسال",
+    "sent": "تم إرسال رسالتك بنجاح  "
+  },
+
+  "sidebar": {
+    "collapse": "إخفاء القائمة",
+    "expand": "إظهار القائمة",
+
+    "dashboard": "الرئيسية",
+    "overview": "نظرة عامة",
+
+    "appointments": "الحجوزات",
+      "allAppointments": "جميع الحجوزات",
+    "newAppointment": "حجز جديد",
+    "salonAppointments": "حجوزات الصالون",
+    "homeServiceAppointments": "حجوزات الخدمات المنزلية",
+    "homeServiceBookings": "عرض الحجوزات",
+    "newHomeServiceBooking": "حجز جديد",
+    "services": "الخدمات والأقسام",
+    "serviceList": "جميع الخدمات",
+    "newService": "إضافة خدمة",
+    "categories": "الأقسام",
+
+    "staff": "فريق العمل",
+    "staffList": "كل الموظفات",
+    "addStaff": "إضافة موظفة",
+    "schedule": "الجدول / المناوبات",
+
+    "pricingOffers": "الأسعار والعروض",
+    "pricing": "قائمة الأسعار",
+    "offers": "العروض",
+
+    "reviews": "التقييمات",
+    "allReviews": "كل التقييمات",
+    "featuredReviews": "المميزة",
+
+    "settings": "إعدادات الصالون",
+    "salonProfile": "بيانات الصالون",
+    "businessHours": "ساعات العمل",
+    "integration": "الربط / الواتساب",
+
+    "account": "الحساب",
+    "myProfile": "ملفي الشخصي",
+    "notifications": "الإشعارات",
+    "languageToggle": "تغيير اللغة",
+    "signout": "تسجيل الخروج"
+  },
+
+  "footer": {
+    "rights": "جميع الحقوق محفوظة"
+  },
+
+  "dashSections": {
+    "pageTitle": "الأقسام والخدمات",
+    "pageSubtitle": "قسّمي خدماتك (الشعر، الأظافر، المكياج...)",
+
+    "pageHeader": {
+      "title": "أقسام الخدمات",
+      "desc": "قسّمي خدماتك (شعر، أظافر، مكياج، إلخ). هذه الأقسام تظهر للعميلة كالتصنيفات الرئيسية."
+    },
+
+    "cardCreate": {
+      "title": "إضافة قسم جديد",
+      "subtitle": "هذه الأقسام تظهر للعميلة كتصنيفات رئيسية."
+    },
+
+    "form": {
+      "serviceCategory": "فئة الخدمة",
+      "addCategory": "إضافة فئة",
+      "addNewCategory": "إضافة فئة جديدة",
+      "categoryName": "اسم الفئة",
+      "categoryNamePlaceholder": "أدخل اسم الفئة...",
+      "categoryIcon": "أيقونة الفئة",
+      "cancel": "إلغاء",
+      "icon": "الأيقونة",
+      "subtitle": "وصف قصير (اختياري)",
+      "sectionName": "اسم القسم *",
+      "sectionNamePlaceholder": "الشعر",
+      "description": "الوصف (اختياري)",
+      "descriptionPlaceholder": "قص، تسريحة، سشوار…",
+      "features": "يشمل (كل سطر نقطة)",
+      "featuresPlaceholder": "ميزة 1\nميزة 2\nميزة 3",
+      "featuresHint": "أدخل كل ميزة في سطر جديد. استخدم النقاط (•) لسهولة القراءة.",
+      "itemsCount": "{{count}} عنصر",
+      "nameRequired": "اسم القسم مطلوب",
+      "basicInfo": "المعلومات الأساسية",
+      "details": "التفاصيل",
+      "addBtn": "إضافة القسم",
+      "saving": "جاري الحفظ…",
+      "subtitlePlaceholder": "شعار قصير لهذا القسم",
+
+      "added": "تمت إضافة القسم ✔",
+      "addedToastTitle": "تمت الإضافة",
+      "addedToastDesc": "القسم الجديد أصبح ظاهر الآن.",
+      "errorGeneric": "فشل في إنشاء القسم",
+
+      "categories": {
+        "hair": "خدمات الشعر",
+        "nails": "العناية بالأظافر",
+        "makeup": "المكياج",
+        "spa": "علاجات السبا",
+        "premium": "الخدمات المميزة",
+        "facial": "العناية بالبشرة",
+        "massage": "التدليك",
+        "waxing": "إزالة الشعر"
+      }
+    },
+
+    "list": {
+      "title": "الأقسام الحالية",
+      "count": "إجمالي الأقسام {{count}}",
+      "loading": "جاري التحميل…",
+      "empty": "لا توجد أقسام بعد. ابدئي بإضافة أول قسم 👆",
+      "error": "فشل تحميل الأقسام"
+    },
+
+    "table": {
+      "colSection": "القسم",
+      "colDescription": "الوصف",
+      "colStatus": "الحالة",
+      "colCreated": "تاريخ الإنشاء",
+      "colActions": "إجراءات"
+    },
+
+    "row": {
+      "status": {
+        "active": "ظاهر",
+        "hidden": "مخفي",
+        "activeLabel": "نشط (ظاهر للعملاء)",
+        "hiddenLabel": "مخفي"
+      },
+      "placeholderDesc": "وصف القسم",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "deleting": "جاري الحذف…",
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "saving": "جاري الحفظ…",
+      "confirmDelete": "حذف القسم \"{{name}}\"؟ لا يمكن التراجع.",
+
+      "deletedToastTitle": "تم الحذف",
+      "deletedToastDesc": "تم حذف العنصر بنجاح",
+      "savedToastTitle": "تم الحفظ",
+      "savedToastDesc": "تم تطبيق التعديلات بنجاح.",
+      "deleteError": "فشل في الحذف",
+      "updateError": "فشل في التعديل",
+      "nameRequiredToast": "يرجى إدخال اسم للقسم."
+    }
+  },
+
+  "dashShell": {
+    "title": "لوحة التحكم",
+    "subtitle": "أدوات الإدارة، الموظفات، الحجوزات والمزيد.",
+    "online": "متصل"
+  },
+
+  "profile": {
+    "title": "ملفي الشخصي",
+    "subtitle": "إدارة إعدادات حسابك وتفضيلاتك",
+    "profileInfo": "معلومات الملف الشخصي",
+    "changePassword": "تغيير كلمة المرور",
+    "salonInfo": "معلومات الصالون",
+    "ownerInfo": "معلومات المالك",
+    "salonName": "اسم الصالون",
+    "planType": "نوع الباقة",
+    "phone": "الهاتف",
+    "city": "المدينة",
+    "email": "البريد الإلكتروني",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
+    "passwordHint": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "updateProfile": "تحديث الملف الشخصي",
+    "updating": "جاري التحديث...",
+    "changingPassword": "جاري تغيير كلمة المرور...",
+    "passwordsNotMatch": "كلمات المرور الجديدة غير متطابقة",
+    "passwordTooShort": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+    "passwordSuccess": "تم تغيير كلمة المرور بنجاح"
+  },
+
+  "workingHours": {
+    "title": "ساعات العمل",
+    "subtitle": "قد تتغيّر الساعات في العطل أو المواسم.",
+    "timezone": "المنطقة الزمنية",
+    "timezoneNote": "جميع الأوقات معروضة حسب منطقتك الزمنية",
+    "openNow": "مفتوح الآن",
+    "closedNow": "مغلق الآن",
+    "weeklyHours": "ساعات العمل الأسبوعية",
+    "closed": "مغلق",
+    "saving": "جاري الحفظ...",
+    "save": "حفظ التغييرات",
+    "saved": "تم حفظ ساعات العمل بنجاح",
+    "note": "ملاحظة: قد تختلف المواعيد في المناسبات الرسمية. للتأكد من التوفر الدقيق يرجى الحجز مسبقًا."
+  },
+
+  "homeServices": {
+    "confirmDeleteTitle": "حذف الخدمة",
+    "title": "الخدمات المنزلية",
+    "subtitle": "إدارة الخدمات المنزلية التي يمكن للعملاء حجزها",
+    "addService": "إضافة خدمة",
+    "editService": "تعديل الخدمة",
+    "addNewService": "إضافة خدمة جديدة",
+    "serviceName": "اسم الخدمة",
+    "namePlaceholder": "مثال: قص شعر في المنزل",
+    "category": "الفئة",
+    "selectCategory": "اختر فئة",
+    "price": "السعر",
+    "duration": "المدة",
+    "minutes": "دقيقة",
+    "description": "الوصف",
+    "descriptionPlaceholder": "صف الخدمة...",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "servicesList": "الخدمات",
+    "noServices": "لا توجد خدمات بعد",
+    "noServicesDesc": "ابدأ بإنشاء أول خدمة منزلية لديك.",
+    "addFirstService": "أضف أول خدمة لك",
+    "activate": "تفعيل",
+    "deactivate": "إلغاء التفعيل",
+    "created": "تم إنشاء الخدمة المنزلية بنجاح",
+    "updated": "تم تحديث الخدمة المنزلية بنجاح",
+    "deleted": "تم حذف الخدمة المنزلية بنجاح",
+    "confirmDelete": "هل أنت متأكد أنك تريد حذف هذه الخدمة؟"
+  },
+
+  "offers": {
+    "offerTitle": "عنوان العرض",
+    "titlePlaceholder": "مثال: تخفيضات الصيف",
+    "category": "الفئة",
+    "categoryPlaceholder": "مثال: شعر، مكياج",
+    "originalPrice": "السعر الأصلي",
+    "discountPercentage": "نسبة الخصم %",
+    "discountAmount": "قيمة الخصم",
+    "finalPrice": "السعر النهائي",
+    "maxUses": "الحد الأقصى للاستخدامات",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
+    "termsConditions": "الشروط والأحكام",
+    "termsPlaceholder": "أدخل الشروط والأحكام...",
+    "active": "نشط",
+    "priceSummary": "ملخص الأسعار",
+    "offersList": "قائمة العروض",
+    "noOffers": "لا توجد عروض بعد",
+    "noOffersDesc": "ابدأ بإنشاء أول عرض تخفيض لعملائك.",
+    "addFirstOffer": "أضف أول عرض",
+    "inactive": "غير نشط",
+    "expired": "منتهي",
+    "price": "السعر",
+    "endsIn": "ينتهي في",
+    "days": "أيام",
+    "usage": "الاستخدام",
+    "deactivate": "إيقاف",
+    "activate": "تفعيل",
+    "confirmDeleteTitle": "تأكيد الحذف",
+    "confirmDelete": "هل أنت متأكد من حذف هذا العرض؟ لا يمكن التراجع عن هذا الإجراء.",
+    "discountNote": "ملاحظة: استخدم إما نسبة الخصم أو قيمة الخصم، وليس كلاهما",
+    
+    "bothDiscountsError": "لا يمكن إدخال نسبة الخصم وقيمة الخصم معاً",
+    "invalidDiscountPercentage": "نسبة الخصم يجب أن تكون بين 0 و 100",
+    "invalidDiscountAmount": "قيمة الخصم لا يمكن أن تكون سالبة",
+    "invalidOriginalPrice": "السعر الأصلي لا يمكن أن يكون سالب",
+    "invalidFinalPrice": "السعر النهائي لا يمكن أن يكون سالب",
+
+    "totalOffers": "إجمالي العروض",
+    "activeOffers": "العروض النشطة",
+    "expiredOffers": "العروض المنتهية",
+    "totalUses": "إجمالي الاستخدامات"
+  },
+
+  "toast": {
+    "success": {
+      "offerCreated": "تم إنشاء العرض بنجاح",
+      "offerUpdated": "تم تحديث العرض بنجاح",
+      "offerDeleted": "تم حذف العرض بنجاح",
+      "offerActivated": "تم تفعيل العرض بنجاح",
+      "offerDeactivated": "تم إيقاف العرض بنجاح"
+    },
+    "error": {
+      "fetchOffersFailed": "فشل في جلب العروض",
+      "createOfferFailed": "فشل في إنشاء العرض",
+      "updateOfferFailed": "فشل في تحديث العرض",
+      "deleteOfferFailed": "فشل في حذف العرض",
+      "toggleStatusFailed": "فشل في تحديث حالة العرض",
+      "sessionExpired": "انتهت الجلسة. يرجى تسجيل الدخول مرة أخرى.",
+      "loginRequired": "يرجى تسجيل الدخول للوصول إلى العروض",
+      "validationError": "يرجى التحقق من النموذج للأخطاء"
+    },
+    "title": {
+      "success": "نجح",
+      "error": "خطأ",
+      "warning": "تحذير",
+      "info": "معلومات"
+    }
+  },
+  
+  "title": "العروض والحسومات الخاصة",
+  "subtitle": "استفد من عروضنا الحصرية واحصل على أفضل الخدمات بأسعار مميزة",
+  "all": "جميع العروض",
+  "search": "بحث العروض",
+  "searchPlaceholder": "ابحث في العروض...",
+  "area": "المنطقة",
+  "areaNote": "اختر منطقتك لتحديد الخدمات المتاحة",
+  "booked": "تم حجز العرض بنجاح! سنتواصل معك قريباً.",
+  "sort": {
+    "newest": "الأحدث",
+    "discount": "أعلى خصم",
+    "price-low": "السعر (منخفض إلى مرتفع)",
+    "price-high": "السعر (مرتفع إلى منخفض)",
+    "ending": "تنتهي قريباً"
+  },
+  "stats": {
+    "availableOffers": "العروض المتاحة",
+    "shownResults": "النتائج المعروضة",
+    "averageSavings": "متوسط التوفير"
+  },
+  "offer": {
+    "featured": "مميز",
+    "remaining": "متبقي {{count}}",
+    "validUntil": "ينتهي في",
+    "save": "وفرت {{amount}} ر.س",
+    "discount": "خصم {{percentage}}%",
+    "discountAmount": "خصم {{amount}} ر.س",
+    "terms": "الشروط والأحكام",
+    "bookOffer": "احجز العرض"
+  },
+  "empty": {
+    "noOffers": "لا توجد عروض متاحة",
+    "noResults": "لم نعثر على عروض تطابق بحثك",
+    "showAll": "عرض جميع العروض"
+  },
+  "contact": {
+    "help": "هل تحتاج مساعدة في الاختيار؟",
+    "assistance": "فريقنا مستعد لمساعدتك في اختيار أفضل عرض يناسب احتياجاتك",
+    "consultation": "اتصل بنا للاستشارة"
+  },
+  "loading": "جاري تحميل العروض",
+  "loadingSubtitle": "نستعد لعرض أفضل العروض والحسومات الخاصة",
+  "error": {
+    "title": "عذراً، حدث خطأ",
+    "retry": "إعادة المحاولة"
+  },
+  "sortBy": "ترتيب حسب",
+  "filter": {
+    "allCategories": "جميع الفئات",
+    "byCategory": "تصفية حسب الفئة"
+  },
+  "pricing": {
+    "original": "السعر الأصلي",
+    "final": "السعر النهائي",
+    "youSave": "وفرت",
+    "discount": "خصم"
+  },
+  "availability": {
+    "limited": "كمية محدودة",
+    "unlimited": "غير محدود",
+    "expires": "ينتهي",
+    "active": "نشط",
+    "expired": "منتهي"
+  },
+  "actions": {
+    "viewDetails": "عرض التفاصيل",
+    "applyOffer": "تطبيق العرض",
+    "shareOffer": "مشاركة العرض"
+  },
+  "validation": {
+    "noOffersFound": "لم يتم العثور على عروض",
+    "tryDifferentSearch": "جرب بحثاً مختلفاً",
+    "checkBackLater": "تفقد لاحقاً للعروض الجديدة"
+  },
+
+  "pricing": {
+    "pageHeader": {
+      "title": "الخدمات والأسعار",
+      "desc": "إدارة خدمات الصالون، تحديد الأسعار وتنظيم الميزات"
+    },
+    "stats": {
+      "totalServices": "إجمالي الخدمات",
+      "totalSections": "إجمالي الأقسام", 
+      "activeServices": "الخدمات النشطة",
+      "avgPrice": "متوسط السعر"
+    },
+    "actions": {
+      "addService": "إضافة خدمة جديدة",
+      "edit": "تعديل",
+      "delete": "حذف", 
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "filterBySection": "تصفية حسب القسم"
+    },
+    "form": {
+      "section": "القسم",
+      "serviceName": "اسم الخدمة",
+      "description": "الوصف",
+      "price": "السعر",
+      "duration": "المدة (دقيقة)",
+      "features": "الميزات/الخيارات",
+      "addFeature": "إضافة ميزة",
+      "sectionRequired": "القسم *",
+      "serviceNameRequired": "اسم الخدمة *",
+      "priceRequired": "السعر *",
+      "selectSection": "اختر قسم",
+      "serviceNamePlaceholder": "مثال: قص شعر، ميك أب، تنظيف بشرة",
+      "descriptionPlaceholder": "وصف مختصر للخدمة...",
+      "featurePlaceholder": "وصف الميزة..."
+    },
+    "table": {
+      "allSections": "جميع الأقسام",
+      "noServices": "لم يتم العثور على خدمات",
+      "noServicesDesc": "ابدأ بإنشاء أول خدمة لك.",
+      "noServicesInSection": "لا توجد خدمات في هذا القسم.",
+      "unknownSection": "قسم غير معروف",
+      "duration": "مدة",
+      "min": "دقيقة"
+    },
+    "modal": {
+      "addService": "إضافة خدمة جديدة", 
+      "editService": "تعديل الخدمة",
+      "creating": "جاري الإنشاء...",
+      "updating": "جاري التحديث...",
+      "createService": "إنشاء الخدمة",
+      "updateService": "تحديث الخدمة"
+    },
+    "success": {
+      "created": "تم إنشاء الخدمة بنجاح",
+      "updated": "تم تحديث الخدمة بنجاح", 
+      "deleted": "تم حذف الخدمة بنجاح"
+    },
+    "errors": {
+      "fetchFailed": "فشل في تحميل الخدمات",
+      "saveFailed": "فشل في حفظ الخدمة",
+      "deleteFailed": "فشل في حذف الخدمة",
+      "missingFields": "يرجى ملء جميع الحقول المطلوبة",
+      "deleting": "جاري الحذف..."
+    }
+  },
+
+  "common": {
+    "loading": "جاري التحميل...",
+    "search": "بحث",
+    "filter": "تصفية",
+    "all": "الكل",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "create": "إنشاء",
+    "update": "تحديث",
+    "confirm": "تأكيد",
+    "close": "إغلاق",
+    "yes": "نعم",
+    "no": "لا",
+    "required": "مطلوب",
+    "error": "خطأ",
+    "success": "نجح",
+    "saving": "جاري الحفظ...",
+    "currency": "ر.س",
+    "serviceNA": "الخدمة غير متوفرة",
+    "clear": "مسح",
+    "actions": "الإجراءات",
+    "back": "العودة للحجوزات",
+    "creating": "جاري إنشاء الحجز...",
+    "createBooking": "إنشاء الحجز",
+    "minutes": "دقيقة"
+  },
+  
+  "bookings": {
+    "title": "إدارة الحجوزات",
+    "subtitle": "إدارة المواعيد وحجوزات العملاء",
+    "newBooking": "حجز جديد",
+    "searchPlaceholder": "البحث باسم العميل أو الهاتف...",
+    
+    "status": {
+      "all": "جميع الحالات",
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "completed": "مكتمل",
+      "cancelled": "ملغى",
+      "noShow": "لم يحضر"
+    },
+    
+    "serviceTypes": {
+      "salonService": "خدمة الصالون",
+      "homeVisit": "زيارة منزلية"
+    },
+    
+    "paymentStatus": {
+      "pending": "قيد الانتظار",
+      "paid": "مدفوع",
+      "failed": "فشل"
+    },
+    
+    "stats": {
+      "total": "إجمالي الحجوزات",
+      "today": "حجوزات اليوم",
+      "upcoming": "القادمة (7 أيام)",
+      "revenue": "إجمالي الإيرادات"
+    },
+    
+    "filters": {
+      "date": "التاريخ",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء",
+      "status": "الحالة",
+      "customer": "العميل"
+    },
+    
+    "table": {
+      "customer": "العميل",
+      "service": "الخدمة",
+      "dateTime": "التاريخ والوقت",
+      "price": "السعر",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    
+    "details": {
+      "title": "تفاصيل الحجز",
+      "status": "الحالة",
+      "totalAmount": "المبلغ الإجمالي",
+      "appointmentInfo": "معلومات الموعد",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "service": "الخدمة",
+      "duration": "المدة",
+      "customerDetails": "تفاصيل العميل",
+      "customer": "العميل",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "serviceType": "نوع الخدمة",
+      "paymentStatus": "حالة الدفع",
+      "additionalNotes": "ملاحظات إضافية",
+      "lastUpdated": "آخر تحديث",
+      "loading": "جارٍ تحميل تفاصيل الحجز..."
+    },
+    
+    "list": {
+      "loading": "جارٍ تحميل الحجوزات..."
+    },
+    
+    "actions": {
+      "viewDetails": "عرض التفاصيل",
+      "editBooking": "تعديل الحجز",
+      "deleteBooking": "حذف الحجز",
+      "cancelBooking": "إلغاء الحجز",
+      "confirmBooking": "تأكيد الحجز",
+      "markComplete": "تعيين كمكتمل",
+      "close": "إغلاق"
+    },
+    
+    "delete": {
+      "title": "حذف الحجز",
+      "message": "هل أنت متأكد من رغبتك في حذف هذا الحجز؟ لا يمكن التراجع عن هذا الإجراء.",
+      "confirm": "حذف"
+    },
+    
+    "empty": {
+      "title": "لم يتم العثور على حجوزات",
+      "subtitle": "حاول تعديل عوامل البحث أو إنشاء حجز جديد."
+    },
+    
+    "pagination": {
+      "showing": "عرض",
+      "to": "إلى",
+      "of": "من",
+      "results": "نتيجة",
+      "previous": "السابق",
+      "next": "التالي"
+    },
+    
+    "minutes": "دقيقة",
+    "duration": "المدة",
+    
+    "edit": {
+      "title": "تعديل الحجز",
+      "success": "تم تحديث الحجز بنجاح",
+      "error": "فشل في تحديث الحجز"
+    },
+    
+    "form": {
+      "customerName": "اسم العميلة",
+      "customerPhone": "رقم الجوال",
+      "customerEmail": "البريد الإلكتروني (اختياري)",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "duration": "المدة (دقيقة)",
+      "price": "السعر",
+      "status": "الحالة",
+      "notes": "ملاحظات (اختياري)",
+      "customerNamePlaceholder": "أدخل اسم العميلة",
+      "phone": "رقم الجوال",
+      "phonePlaceholder": "أدخل رقم الجوال",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل البريد الإلكتروني",
+      "serviceType": "نوع الخدمة",
+      "salonService": "خدمة الصالون",
+      "homeService": "خدمة منزلية",
+      "selectService": "اختر الخدمة",
+      "chooseService": "اختر خدمة...",
+      "bookingStatus": "حالة الحجز",
+      "customerNotes": "ملاحظات العميلة",
+      "notesPlaceholder": "أي طلبات خاصة، حساسيات، أو ملاحظات إضافية..."
+    },
+    
+    "create": {
+      "title": "إنشاء حجز جديد",
+      "subtitle": "إضافة موعد جديد للصالون",
+      "bookingDetails": "تفاصيل الحجز",
+      "customerInfo": "معلومات العميلة",
+      "dateTime": "التاريخ والوقت",
+      "serviceDetails": "تفاصيل الخدمة",
+      "additionalInfo": "معلومات إضافية"
+    },
+    
+    "errors": {
+      "required": "هذا الحقل مطلوب",
+      "selectService": "يرجى اختيار خدمة",
+      "validPrice": "يرجى إدخال سعر صحيح",
+      "fetchServices": "فشل في تحميل الخدمات"
+    },
+    
+    "loadingServices": "جاري تحميل الخدمات..."
+  },
+  
+  "homeServiceBookings": {
+    "title": "حجوزات الخدمات المنزلية",
+    "subtitle": "إدارة مواعيد الخدمات المنزلية وزيارات العملاء",
+    "newBooking": "خدمة منزلية جديدة",
+    "service": "الخدمة",
+    "area": "المنطقة",
+    "travel": "سفر",
+    "travelFee": "رسوم السفر",
+    "travelFees": "رسوم السفر",
+    "locationInfo": "معلومات الموقع",
+    "serviceInfo": "معلومات الخدمة",
+    "specialRequirements": "متطلبات خاصة",
+    "notesPlaceholder": "أي ملاحظات خاصة من العميل...",
+    "requirementsPlaceholder": "أي متطلبات خاصة للخدمة المنزلية...",
+    "areaFilter": "المنطقة",
+    "searchPlaceholder": "البحث باسم العميل، الهاتف، أو المنطقة...",
+    
+    "stats": {
+      "total": "إجمالي الخدمات المنزلية",
+      "today": "الخدمات المنزلية لليوم",
+      "upcoming": "الخدمات المنزلية القادمة",
+      "revenue": "إجمالي الإيرادات"
+    },
+    
+    "details": {
+      "title": "تفاصيل حجز الخدمة المنزلية",
+      "loading": "جاري تحميل تفاصيل الحجز...",
+      "serviceType": "نوع الخدمة",
+      "homeVisit": "خدمة الزيارة المنزلية"
+    },
+    
+    "edit": {
+      "title": "تعديل حجز الخدمة المنزلية",
+      "subtitle": "تحديث تفاصيل موعد الخدمة المنزلية"
+    },
+    
+    "delete": {
+      "title": "حذف حجز الخدمة المنزلية",
+      "message": "هل أنت متأكد من رغبتك في حذف حجز الخدمة المنزلية هذا؟ لا يمكن التراجع عن هذا الإجراء.",
+      "confirm": "حذف الخدمة المنزلية"
+    },
+    
+    "list": {
+      "loading": "جاري تحميل حجوزات الخدمات المنزلية..."
+    },
+    
+    "empty": {
+      "title": "لم يتم العثور على حجوزات خدمات منزلية",
+      "subtitle": "حاول تعديل عوامل التصفية أو إنشاء حجز خدمة منزلية جديد"
+    }
+  },
+
+  "bookings": {
+    "title": "إدارة الحجوزات",
+    "subtitle": "إدارة المواعيد وحجوزات العملاء",
+    "newBooking": "حجز جديد",
+    "searchPlaceholder": "البحث باسم العميل أو الهاتف...",
+    
+    "form": {
+      "customerName": "اسم العميل",
+      "customerPhone": "رقم الهاتف",
+      "customerEmail": "البريد الإلكتروني",
+      "customerEmailOptional": "البريد الإلكتروني (اختياري)",
+      "address": "العنوان",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "duration": "المدة (دقائق)",
+      "price": "السعر",
+      "status": "الحالة",
+      "notes": "ملاحظات",
+      "notesOptional": "ملاحظات (اختياري)"
+    },
+    
+    "filters": {
+      "date": "التاريخ",
+      "startDate": "تاريخ البدء",
+      "endDate": "تاريخ الانتهاء"
+    },
+    
+    "status": {
+      "all": "جميع الحالات",
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "completed": "مكتمل",
+      "cancelled": "ملغى",
+      "noShow": "لم يحضر"
+    },
+    
+    "serviceTypes": {
+      "salonService": "خدمة الصالون",
+      "homeVisit": "زيارة منزلية"
+    },
+    
+    "paymentStatus": {
+      "pending": "قيد الانتظار",
+      "paid": "مدفوع",
+      "failed": "فشل"
+    },
+    
+    "table": {
+      "customer": "العميل",
+      "service": "الخدمة",
+      "dateTime": "التاريخ والوقت",
+      "price": "السعر",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    
+    "actions": {
+      "viewDetails": "عرض التفاصيل",
+      "confirmBooking": "تأكيد",
+      "markComplete": "إكمال",
+      "cancelBooking": "إلغاء",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "close": "إغلاق"
+    },
+    
+    "details": {
+      "title": "تفاصيل الحجز",
+      "loading": "جاري تحميل تفاصيل الحجز...",
+      "appointmentInfo": "معلومات الموعد",
+      "customerDetails": "تفاصيل العميل",
+      "additionalNotes": "ملاحظات إضافية",
+      "status": "الحالة",
+      "totalAmount": "المبلغ الإجمالي",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "service": "الخدمة",
+      "duration": "المدة",
+      "customer": "العميل",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "serviceType": "نوع الخدمة",
+      "paymentStatus": "حالة الدفع",
+      "lastUpdated": "آخر تحديث"
+    },
+    
+    "pricing": "التسعير",
+    "totalPrice": "السعر الإجمالي",
+    
+    "delete": {
+      "title": "حذف الحجز",
+      "message": "هل أنت متأكد من رغبتك في حذف هذا الحجز؟ لا يمكن التراجع عن هذا الإجراء.",
+      "confirm": "حذف الحجز"
+    },
+    
+    "edit": {
+      "title": "تعديل الحجز"
+    },
+    
+    "stats": {
+      "total": "إجمالي الحجوزات",
+      "today": "حجوزات اليوم",
+      "upcoming": "القادمة (7 أيام)",
+      "revenue": "إجمالي الإيرادات"
+    },
+    
+    "pagination": {
+      "showing": "عرض",
+      "to": "إلى",
+      "of": "من",
+      "results": "نتيجة",
+      "previous": "السابق",
+      "next": "التالي"
+    },
+    
+    "empty": {
+      "title": "لم يتم العثور على حجوزات",
+      "subtitle": "حاول تعديل عوامل التصفية أو إنشاء حجز جديد."
+    },
+    
+    "minutes": "دقيقة"
+  },
+
+  "services": {
+    "name": "اسم الخدمة",
+    "category": "الفئة",
+    "price": "سعر الخدمة",
+    "duration": "المدة"
+  },
+
+  "common": {
+    "loading": "جاري التحميل...",
+    "saving": "جاري الحفظ...",
+    "save": "حفظ التغييرات",
+    "cancel": "إلغاء",
+    "clear": "مسح",
+    "close": "إغلاق",
+    "view": "عرض",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "confirm": "تأكيد",
+    "yes": "نعم",
+    "no": "لا",
+    "ok": "موافق",
+    "error": "خطأ",
+    "success": "نجاح",
+    "warning": "تحذير",
+    "info": "معلومات",
+    "search": "بحث",
+    "filter": "تصفية",
+    "all": "الكل",
+    "none": "لا شيء",
+    "minutes": "دقائق",
+    "min": "د",
+    "serviceNA": "الخدمة غير متاحة",
+    "viewGrid": "عرض شبكي",
+    "viewList": "عرض قائمة",
+    "lastUpdated": "آخر تحديث",
+    "createdAt": "تم الإنشاء في",
+    "updatedAt": "تم التحديث في"
+  },
+
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+    "invalidPhone": "يرجى إدخال رقم هاتف صحيح",
+    "invalidDate": "يرجى إدخال تاريخ صحيح",
+    "invalidTime": "يرجى إدخال وقت صحيح"
+  },
+
+  "errors": {
+    "networkError": "حدث خطأ في الشبكة",
+    "serverError": "حدث خطأ في الخادم",
+    "unauthorized": "وصول غير مصرح به",
+    "notFound": "الموارد غير موجودة",
+    "unknownError": "حدث خطأ غير معروف"
+  },
+   "toasts": {
+      "bookingCreatedTitle": "تم إنشاء الحجز",
+      "bookingCreated": "تم إنشاء حجز الخدمة المنزلية لـ {{customer}} بنجاح",
+      "bookingUpdatedTitle": "تم تحديث الحجز",
+      "bookingUpdated": "تم تحديث حجز الخدمة المنزلية لـ {{customer}} بنجاح",
+      "bookingDeletedTitle": "تم حذف الحجز",
+      "bookingDeleted": "تم حذف حجز الخدمة المنزلية لـ {{customer}} بنجاح",
+      "bookingStatusUpdatedTitle": "تم تحديث الحالة",
+      "bookingStatusUpdated": "تم تغيير حالة الحجز لـ {{customer}} إلى {{status}}",
+      "bookingErrorTitle": "خطأ في الحجز",
+      "bookingError": "حدث خطأ أثناء معالجة الحجز"
+    }
+
+}
