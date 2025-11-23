@@ -35,7 +35,7 @@
   },
 
   "home": {
-    "location": "Riyadh, Saudi / الرياض - السعودية",
+    "location": "Istanbul Street, Al Faiha, Riyadh, Saudi Arabia / شارع اسطنبول، حي الفيحاء، الرياض، السعودية",
     "buttons": {
       "book": { "primary": "Book", "secondary": "احجز" },
       "prices": { "primary": "Prices", "secondary": "قائمة الأسعار" },
@@ -305,24 +305,47 @@
   },
 
   "contact": {
+    "badge": "Stay in touch",
     "title": "Contact Us",
     "subtitle": "Ask about booking, pricing, offers, or anything else. We're here to help 👇",
+    "infoTitle": "Contact information",
     "locationLabel": "Location",
+    "locationValue": "Istanbul Street, Al Faiha, Riyadh, Saudi Arabia / شارع اسطنبول، حي الفيحاء، الرياض، السعودية",
     "phoneLabel": "Phone / WhatsApp",
-    "phoneValue": "+966 5X XXX XXXX",
+    "phoneValue": "+966 538 216 056",
+    "whatsappCTA": "Chat on WhatsApp",
     "hoursLabel": "Working Hours",
     "hoursValue": "Daily 10 AM – 11 PM",
     "mapLabel": "Map location",
-    "mapPlaceholder": "Map preview (add Google Maps iframe here)",
-    "whatsappCTA": "Chat on WhatsApp",
+    "mapDescription": "Live view of our Riyadh location. Tap the link below to open it in Google Maps.",
+    "mapLinkCTA": "Open in Google Maps",
     "formTitle": "Send a Message",
     "formSubtitle": "Ask us anything and we'll get back to you.",
+    "sentTitle": "Your message was sent 💖",
+    "sentMessage": "Thanks for reaching out! We'll reply soon.",
+    "sendAnother": "Send another message",
+    "errorMessage": "Unable to send the message right now. Please try again later.",
     "name": "Name",
+    "namePlaceholder": "Enter your full name",
     "phone": "Phone",
+    "phonePlaceholder": "e.g. +966 5XXXXXXXX",
     "msg": "Your message / question",
+    "msgPlaceholder": "Tell us how we can help you",
     "sending": "Sending…",
     "submit": "Send",
-    "sent": "Your message was sent 💖"
+    "privacyNote": "Your data stays confidential and is only used to respond to your inquiry.",
+    "support": {
+      "title": "Fast support",
+      "desc": "Expect a reply within 24 hours"
+    },
+    "availability": {
+      "title": "Always available",
+      "desc": "We answer every day of the week"
+    },
+    "expertise": {
+      "title": "Specialist experts",
+      "desc": "Professional tips & free consultations"
+    }
   },
 
   "sidebar": {
@@ -594,14 +617,21 @@
     "featured": "Featured",
     "remaining": "{{count}} remaining",
     "validUntil": "Valid until",
+    "unavailable": "Not available for online booking",
     "save": "Save {{amount}} SAR",
     "discount": "{{percentage}}% off",
     "discountAmount": "{{amount}} SAR off",
+    "categoryLabel": "Category",
+    "durationVaries": "Duration may vary",
+    "durationMinutes": "{{minutes}} min",
+    "durationHours": "{{hours}} hr",
+    "durationHoursMinutes": "{{hours}}h {{minutes}}m",
     "stats": {
       "available": "Available Offers",
       "showing": "Showing Results",
       "average": "Average Savings"
     },
+    "sortLabel": "Sort by",
     "sort": {
       "newest": "Newest",
       "discount": "Highest Discount",
@@ -611,6 +641,8 @@
     },
     "noOffers": "No offers available",
     "noResults": "No offers match your search",
+    "noOffersDescription": "Check back soon – new offers are on the way.",
+    "noResultsDescription": "Try widening your search or resetting the filters.",
     "showAll": "Show All Offers",
     "help": {
       "title": "Need help choosing?",

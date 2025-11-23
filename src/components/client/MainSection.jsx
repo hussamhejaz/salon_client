@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-// All buttons shown in the hero card
+// URL helpers
 const BUTTON_KEYS = [
   "book",
   "prices",
@@ -34,6 +34,10 @@ const ROUTES = {
   sections: "sections",
 };
 
+const GOOGLE_MAPS_SEARCH_BASE = "https://www.google.com/maps/search/?api=1&query=";
+const DEFAULT_LOCATION =
+  "Istanbul Street, Al Faiha, Riyadh, Saudi Arabia / شارع اسطنبول، حي الفيحاء، الرياض، السعودية";
+
 const BRAND = "#E39B34";
 const BRAND_DARK = "#CF8A2B";
 const BRAND_SOFT = "rgba(227,155,52,0.12)";
@@ -43,11 +47,23 @@ export default function MainSection() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const locationText = t("home.location", { defaultValue: DEFAULT_LOCATION });
+  const locationLabel = t("contact.mapLabel", { defaultValue: "Map location" });
+
   function handleClick(key) {
     const path = ROUTES[key];
     if (path) {
       navigate(path);
     }
+  }
+
+  function handleLocationClick() {
+    if (typeof window === "undefined" || !locationText) {
+      return;
+    }
+
+    const url = `${GOOGLE_MAPS_SEARCH_BASE}${encodeURIComponent(locationText)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -83,19 +99,56 @@ export default function MainSection() {
 
           {/* Location with enhanced styling */}
           <div className="flex flex-col items-center gap-3 mb-12">
-            <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-2xl px-6 py-4 shadow-lg border border-amber-200/30">
-              <svg
-                className="h-6 w-6 text-amber-600"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 6 11 7 12 1-1 7-6.75 7-12 0-3.86-3.14-7-7-7z" />
-              </svg>
-              <h2 className="text-xl md:text-2xl font-semibold text-slate-800">
-                {t("home.location")}
-              </h2>
-            </div>
+            <button
+              type="button"
+              onClick={handleLocationClick}
+              className="
+                flex w-full max-w-3xl items-center justify-between gap-6
+                rounded-3xl border border-slate-200 bg-white/90 px-6 py-5 shadow-lg shadow-slate-200
+                hover:border-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400
+                transition hover:-translate-y-0.5 duration-300
+              "
+              title={locationLabel}
+              aria-label={locationLabel}
+            >
+              <div className="flex items-center gap-4">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-200/50">
+                  <svg
+                    className="h-6 w-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 6 11 7 12 1-1 7-6.75 7-12 0-3.86-3.14-7-7-7z" />
+                    <circle cx="12" cy="9" r="2.25" />
+                  </svg>
+                </span>
+                <div className="text-left">
+                  <p className="text-xs uppercase tracking-wide text-slate-400">{locationLabel}</p>
+                  <h2 className="text-lg font-semibold text-slate-900 leading-tight">
+                    {locationText}
+                  </h2>
+                </div>
+              </div>
+              <div className="flex flex-col items-end">
+                <svg
+                  className="h-4 w-4 text-amber-500 mt-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </button>
             
             {/* Decorative divider */}
             <div className="w-32 h-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 shadow-sm"></div>

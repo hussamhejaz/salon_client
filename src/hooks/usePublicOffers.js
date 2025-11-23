@@ -1,6 +1,6 @@
 // src/hooks/usePublicOffers.js
-import { useState, useEffect } from 'react';
-import { API_BASE } from '../config/api';
+import { useState, useEffect } from "react";
+import { API_BASE } from "../config/api";
 
 export function usePublicOffers(salonId) {
   const [salonData, setSalonData] = useState(null);
@@ -8,6 +8,7 @@ export function usePublicOffers(salonId) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     if (!salonId) return;
@@ -17,9 +18,7 @@ export function usePublicOffers(salonId) {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(
-          `${API_BASE}/api/public/${salonId}/offers`
-        );
+        const response = await fetch(`${API_BASE}/api/public/${salonId}/offers`);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch offers: ${response.status}`);
@@ -29,21 +28,21 @@ export function usePublicOffers(salonId) {
 
         if (data.ok) {
           setSalonData(data.salon);
-          setOffers(data.offers);
-          setCategories(data.categories);
+          setOffers(data.offers || []);
+          setCategories(data.categories || []);
         } else {
-          throw new Error(data.error || 'Unknown error');
+          throw new Error(data.error || "Unknown error");
         }
       } catch (err) {
+        console.error("Error fetching offers data:", err);
         setError(err.message);
-        console.error('Error fetching offers data:', err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchOffersData();
-  }, [salonId]);
+  }, [salonId, reloadKey]);
 
   return {
     salonData,
@@ -51,13 +50,6 @@ export function usePublicOffers(salonId) {
     categories,
     loading,
     error,
-    refetch: () => {
-      if (salonId) {
-        setLoading(true);
-        setSalonData(null);
-        setOffers([]);
-        setCategories([]);
-      }
-    }
+    refetch: () => setReloadKey((k) => k + 1),
   };
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 import i18n from "../../i18n.js"; // Import i18n instance
 import { API_BASE } from "../../config/api";
@@ -102,6 +102,38 @@ function formatPriceLabel(price, t) {
     return t("book.priceOnRequest", { defaultValue: "السعر حسب الطلب" });
   }
   return `${Math.round(numeric).toLocaleString()} ر.س`;
+}
+
+const parseNumberParam = (value) => {
+  if (value === null || value === undefined) {
+    return undefined;
+  }
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? numeric : undefined;
+};
+
+const ORIGINAL_PRICE_FIELDS = [
+  "offer_original_price",
+  "original_price",
+  "price_before_offer",
+];
+
+function getOriginalPriceValue(service) {
+  if (!service) return undefined;
+  for (const key of ORIGINAL_PRICE_FIELDS) {
+    if (Object.prototype.hasOwnProperty.call(service, key)) {
+      const parsed = parseNumberParam(service[key]);
+      if (parsed !== undefined) {
+        return parsed;
+      }
+    }
+  }
+  return undefined;
+}
+
+function shouldShowOriginalPrice(currentValue, originalValue) {
+  if (currentValue === undefined || originalValue === undefined) return false;
+  return originalValue > currentValue;
 }
 
 /* ---------- Calendar Components ---------- */
@@ -251,7 +283,14 @@ function TimeSlot({ value, label, selected, onSelect, available = true }) {
 }
 
 /* ---------- Service Card Component ---------- */
-function ServiceCard({ service, selected, onSelect, durationLabel, priceLabel }) {
+function ServiceCard({
+  service,
+  selected,
+  onSelect,
+  durationLabel,
+  priceLabel,
+  originalPriceLabel,
+}) {
   const iconContent = service.icon || service.name?.charAt(0) || "✧";
   return (
     <button
@@ -288,10 +327,18 @@ function ServiceCard({ service, selected, onSelect, durationLabel, priceLabel })
             </span>
           )}
           {priceLabel && (
-            <span className="flex items-center gap-1">
-              <RiyalIcon size={14} />
-              <span>{priceLabel}</span>
-            </span>
+            <div className="flex flex-col gap-1 text-slate-500">
+              <div className="flex items-center gap-1">
+                <RiyalIcon size={14} />
+                <span className="font-semibold text-slate-800">{priceLabel}</span>
+              </div>
+              {originalPriceLabel && (
+                <div className="flex items-center gap-1 text-xs text-slate-400 line-through">
+                  <RiyalIcon size={12} />
+                  <span>{originalPriceLabel}</span>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -309,8 +356,33 @@ function ServiceCard({ service, selected, onSelect, durationLabel, priceLabel })
 /* ---------- Main Component ---------- */
 export default function BookingForm({ salonId }) {
   const { t, i18n: i18nHook } = useTranslation();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
-  const linkedServiceId = searchParams.get("serviceId");
+  const searchServiceId = searchParams.get("serviceId");
+  const locationOffer = location.state?.offer;
+  const searchParamsString = searchParams.toString();
+  const offerContext = useMemo(() => {
+    const params = new URLSearchParams(searchParamsString);
+    const offerId = params.get("offerId") || locationOffer?.id;
+    const serviceId = params.get("serviceId") || locationOffer?.service_id;
+    const durationMinutes =
+      parseNumberParam(params.get("offerDuration")) ??
+      locationOffer?.duration_minutes ??
+      locationOffer?.duration;
+    const price =
+      parseNumberParam(params.get("offerPrice")) ??
+      locationOffer?.price ??
+      locationOffer?.final_price ??
+      locationOffer?.total_price;
+
+    return {
+      offerId,
+      serviceId,
+      durationMinutes,
+      price,
+    };
+  }, [searchParamsString, locationOffer]);
+  const linkedServiceId = offerContext.serviceId || searchServiceId;
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
@@ -386,7 +458,7 @@ export default function BookingForm({ salonId }) {
   );
 
   const serviceOptions = useMemo(() => {
-    const normalizedList = fetchedServices?.length
+    let normalizedList = fetchedServices?.length
       ? fetchedServices.map((serviceItem) => ({
           ...serviceItem,
           duration_minutes: Number(serviceItem.duration_minutes) || 0,
@@ -400,20 +472,53 @@ export default function BookingForm({ salonId }) {
       };
       const existsInList = normalizedList.some((item) => item.id === normalizedLinked.id);
       if (existsInList) {
-        return normalizedList.map((item) =>
+        normalizedList = normalizedList.map((item) =>
           item.id === normalizedLinked.id ? normalizedLinked : item
         );
+      } else {
+        normalizedList = [normalizedLinked, ...normalizedList];
       }
-      return [normalizedLinked, ...normalizedList];
+    }
+
+    if (offerContext.serviceId) {
+      normalizedList = normalizedList.map((item) => {
+        if (item.id !== offerContext.serviceId) return item;
+        const updated = { ...item };
+        if (typeof offerContext.durationMinutes === "number") {
+          updated.duration_minutes = offerContext.durationMinutes;
+        }
+        if (typeof offerContext.price === "number") {
+          const servicePriceValue = parseNumberParam(item.price);
+          if (
+            servicePriceValue !== undefined &&
+            !Object.prototype.hasOwnProperty.call(updated, "offer_original_price")
+          ) {
+            updated.offer_original_price = servicePriceValue;
+          }
+          updated.price = offerContext.price;
+        }
+        return updated;
+      });
     }
 
     return normalizedList;
-  }, [fetchedServices, fallbackServices, linkedService]);
+  }, [fetchedServices, fallbackServices, linkedService, offerContext]);
 
   const selectedService = useMemo(
     () => serviceOptions.find((item) => item.id === selectedServiceId),
     [serviceOptions, selectedServiceId]
   );
+
+  const selectedServicePriceValue = parseNumberParam(selectedService?.price);
+  const selectedServiceOriginalPriceValue = getOriginalPriceValue(selectedService);
+  const selectedServicePriceLabel =
+    selectedService?.price || selectedService?.price === 0
+      ? formatPriceLabel(selectedService.price, t)
+      : undefined;
+  const selectedServiceOriginalPriceLabel =
+    shouldShowOriginalPrice(selectedServicePriceValue, selectedServiceOriginalPriceValue)
+      ? formatPriceLabel(selectedServiceOriginalPriceValue, t)
+      : undefined;
 
   const slotLocale = i18nHook.language || "en-US";
   const handleServiceSelect = (serviceId) => {
@@ -444,6 +549,8 @@ export default function BookingForm({ salonId }) {
         setCurrentMonth(new Date(today.getFullYear(), today.getMonth(), 1));
       }
       setLinkedServiceAppliedId(linkedServiceId);
+      setLinkedServiceLoading(false);
+      setLinkedServiceError("");
       return;
     }
 
@@ -685,6 +792,10 @@ export default function BookingForm({ salonId }) {
             : undefined,
       };
 
+      if (offerContext.offerId) {
+        payload.offer_id = offerContext.offerId;
+      }
+
       const response = await fetch(`${API_BASE}/api/public/${salonId}/bookings`, {
         method: "POST",
         headers: {
@@ -775,6 +886,23 @@ export default function BookingForm({ salonId }) {
       booking?.duration_minutes || selectedService?.duration_minutes,
       t
     );
+    const confirmationPriceRaw =
+      booking?.total_price ??
+      booking?.price ??
+      selectedService?.price;
+    const confirmationPriceValue = parseNumberParam(confirmationPriceRaw);
+    const confirmationOriginalPriceValue = getOriginalPriceValue(selectedService);
+    const confirmationPriceLabel =
+      confirmationPriceRaw || confirmationPriceRaw === 0
+        ? formatPriceLabel(confirmationPriceRaw, t)
+        : undefined;
+    const confirmationOriginalPriceLabel =
+      shouldShowOriginalPrice(
+        confirmationPriceValue,
+        confirmationOriginalPriceValue
+      )
+        ? formatPriceLabel(confirmationOriginalPriceValue, t)
+        : undefined;
 
     return (
       <section className="max-w-2xl mx-auto px-4">
@@ -800,8 +928,8 @@ export default function BookingForm({ salonId }) {
                   "تم إرسال تفاصيل الحجز إلى بريدك الإلكتروني. سنتصل بك لتأكيد الموعد.",
               })}
           </p>
-          <div className="bg-slate-50 rounded-2xl p-6 mb-6 text-left">
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="bg-slate-50 rounded-2xl p-6 mb-6 text-left">
+              <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-slate-500">
                   {t("book.detail.service", {
@@ -840,6 +968,25 @@ export default function BookingForm({ salonId }) {
                     t("book.statusPending", { defaultValue: "Pending review" })}
                 </p>
               </div>
+              {confirmationPriceLabel && (
+                <div className="mt-4 text-sm text-slate-600">
+                  <span className="text-slate-500">
+                    {t("book.detail.price", {
+                      defaultValue: "Price:",
+                    })}
+                  </span>
+                  <div className="mt-1 flex items-center gap-2 font-medium text-slate-800">
+                    <RiyalIcon size={16} />
+                    <span>{confirmationPriceLabel}</span>
+                  </div>
+                  {confirmationOriginalPriceLabel && (
+                    <div className="mt-1 flex items-center gap-1 text-xs text-slate-400 line-through">
+                      <RiyalIcon size={12} />
+                      <span>{confirmationOriginalPriceLabel}</span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <button
@@ -956,29 +1103,39 @@ export default function BookingForm({ salonId }) {
                     </span>
                   </div>
                 ) : (
-                  serviceOptions.map((item) => (
-                    <ServiceCard
-                      key={item.id}
-                      service={item}
-                      selected={selectedServiceId === item.id}
-                      onSelect={handleServiceSelect}
-                      durationLabel={formatDurationLabel(
-                        item.duration_minutes,
-                        t
-                      )}
-                      priceLabel={
-                        item.price || item.price === 0
-                          ? formatPriceLabel(item.price, t)
-                          : undefined
-                      }
-                    />
-                  ))
+                  serviceOptions.map((item) => {
+                    const priceLabel =
+                      item.price || item.price === 0
+                        ? formatPriceLabel(item.price, t)
+                        : undefined;
+                    const currentPriceValue = parseNumberParam(item.price);
+                    const originalPriceValue = getOriginalPriceValue(item);
+                    const originalPriceLabel =
+                      shouldShowOriginalPrice(currentPriceValue, originalPriceValue)
+                        ? formatPriceLabel(originalPriceValue, t)
+                        : undefined;
+
+                    return (
+                      <ServiceCard
+                        key={item.id}
+                        service={item}
+                        selected={selectedServiceId === item.id}
+                        onSelect={handleServiceSelect}
+                        durationLabel={formatDurationLabel(
+                          item.duration_minutes,
+                          t
+                        )}
+                        priceLabel={priceLabel}
+                        originalPriceLabel={originalPriceLabel}
+                      />
+                    );
+                  })
                 )}
               </div>
 
               {linkedServiceId && linkedServiceLoading && (
                 <p className="mt-4 text-sm text-slate-500 flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-amber-300 border-t-transparent rounded-full animate-spin" />
+              <span className="w-4 h-4 border-2 border-amber-300 border-t-transparent rounded-full animate-spin inline-block" />
                   {t("book.loadingLinkedService", {
                     defaultValue: "جاري تحميل الخدمة المختارة...",
                   })}
@@ -1233,6 +1390,25 @@ export default function BookingForm({ salonId }) {
                 </div>
               </div>
             </div>
+            {selectedServicePriceLabel && (
+              <div className="mt-4 text-sm text-slate-600">
+                <span className="text-slate-500">
+                  {t("book.detail.price", {
+                    defaultValue: "Price:",
+                  })}
+                </span>
+                <div className="mt-1 flex items-center gap-2 font-medium text-slate-800">
+                  <RiyalIcon size={16} />
+                  <span>{selectedServicePriceLabel}</span>
+                </div>
+                {selectedServiceOriginalPriceLabel && (
+                  <div className="mt-1 flex items-center gap-1 text-xs text-slate-400 line-through">
+                    <RiyalIcon size={12} />
+                    <span>{selectedServiceOriginalPriceLabel}</span>
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="text-xs text-slate-500 text-center mb-6">
               {t("book.termsNote", {

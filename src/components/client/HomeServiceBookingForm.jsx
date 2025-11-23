@@ -111,6 +111,38 @@ function formatPriceLabel(price, t) {
   return `${Math.round(numeric).toLocaleString()}`;
 }
 
+const parseNumberParam = (value) => {
+  if (value === null || value === undefined) {
+    return undefined;
+  }
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? numeric : undefined;
+};
+
+const ORIGINAL_PRICE_FIELDS = [
+  "offer_original_price",
+  "original_price",
+  "price_before_offer",
+];
+
+function getOriginalPriceValue(service) {
+  if (!service) return undefined;
+  for (const key of ORIGINAL_PRICE_FIELDS) {
+    if (Object.prototype.hasOwnProperty.call(service, key)) {
+      const parsed = parseNumberParam(service[key]);
+      if (parsed !== undefined) {
+        return parsed;
+      }
+    }
+  }
+  return undefined;
+}
+
+function shouldShowOriginalPrice(currentValue, originalValue) {
+  if (currentValue === undefined || originalValue === undefined) return false;
+  return originalValue > currentValue;
+}
+
 /* ---------- Calendar Components ---------- */
 function CalendarHeader({
   currentMonth,
@@ -306,6 +338,7 @@ function ServiceCard({
   onSelect,
   durationLabel,
   priceLabel,
+  originalPriceLabel,
 }) {
   const iconContent = service.icon || service.name?.charAt(0) || "✧";
   return (
@@ -349,10 +382,18 @@ function ServiceCard({
             </span>
           )}
           {priceLabel && (
-            <span className="flex items-center gap-1">
-              <RiyalIcon size={14} />
-              <span>{priceLabel}</span>
-            </span>
+            <div className="flex flex-col gap-1 text-slate-500">
+              <div className="flex items-center gap-1">
+                <RiyalIcon size={14} />
+                <span className="font-semibold text-slate-800">{priceLabel}</span>
+              </div>
+              {originalPriceLabel && (
+                <div className="flex items-center gap-1 text-xs text-slate-400 line-through">
+                  <RiyalIcon size={12} />
+                  <span>{originalPriceLabel}</span>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -494,6 +535,20 @@ export default function HomeServiceBookingForm({
       serviceOptions.find((item) => item.id === selectedServiceId),
     [serviceOptions, selectedServiceId]
   );
+
+  const selectedServicePriceValue = parseNumberParam(selectedService?.price);
+  const selectedServiceOriginalPriceValue = getOriginalPriceValue(selectedService);
+  const selectedServicePriceLabel =
+    selectedService?.price || selectedService?.price === 0
+      ? formatPriceLabel(selectedService.price, t)
+      : undefined;
+  const selectedServiceOriginalPriceLabel =
+    shouldShowOriginalPrice(
+      selectedServicePriceValue,
+      selectedServiceOriginalPriceValue
+    )
+      ? formatPriceLabel(selectedServiceOriginalPriceValue, t)
+      : undefined;
 
   const slotLocale = i18nHook.language || "en-US";
 
@@ -922,6 +977,24 @@ export default function HomeServiceBookingForm({
         selectedService?.duration_minutes,
       t
     );
+    const confirmationPriceRaw =
+      booking?.total_price ??
+      booking?.price ??
+      selectedService?.price;
+    const confirmationPriceValue = parseNumberParam(confirmationPriceRaw);
+    const confirmationOriginalPriceValue =
+      getOriginalPriceValue(selectedService);
+    const confirmationPriceLabel =
+      confirmationPriceRaw || confirmationPriceRaw === 0
+        ? formatPriceLabel(confirmationPriceRaw, t)
+        : undefined;
+    const confirmationOriginalPriceLabel =
+      shouldShowOriginalPrice(
+        confirmationPriceValue,
+        confirmationOriginalPriceValue
+      )
+        ? formatPriceLabel(confirmationOriginalPriceValue, t)
+        : undefined;
 
     return (
       <section className="max-w-2xl mx-auto px-4">
@@ -954,8 +1027,8 @@ export default function HomeServiceBookingForm({
                   "تم استلام طلبك لخدمة المنزل، وسنتواصل معك قريبًا لتأكيد الموعد.",
               })}
           </p>
-          <div className="bg-slate-50 rounded-2xl p-6 mb-6 text-left">
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="bg-slate-50 rounded-2xl p-6 mb-6 text-left">
+              <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-slate-500">
                   {t("book.detail.service", {
@@ -1000,6 +1073,25 @@ export default function HomeServiceBookingForm({
                     })}
                 </p>
               </div>
+              {confirmationPriceLabel && (
+                <div className="mt-4 text-sm text-slate-600">
+                  <span className="text-slate-500">
+                    {t("book.detail.price", {
+                      defaultValue: "Price:",
+                    })}
+                  </span>
+                  <div className="mt-1 flex items-center gap-2 font-medium text-slate-800">
+                    <RiyalIcon size={16} />
+                    <span>{confirmationPriceLabel}</span>
+                  </div>
+                  {confirmationOriginalPriceLabel && (
+                    <div className="mt-1 flex items-center gap-1 text-xs text-slate-400 line-through">
+                      <RiyalIcon size={12} />
+                      <span>{confirmationOriginalPriceLabel}</span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <button
@@ -1131,23 +1223,33 @@ export default function HomeServiceBookingForm({
                     </span>
                   </div>
                 ) : (
-                  serviceOptions.map((item) => (
-                    <ServiceCard
-                      key={item.id}
-                      service={item}
-                      selected={selectedServiceId === item.id}
-                      onSelect={handleServiceSelect}
-                      durationLabel={formatDurationLabel(
-                        item.duration_minutes,
-                        t
-                      )}
-                      priceLabel={
-                        item.price || item.price === 0
-                          ? formatPriceLabel(item.price, t)
-                          : undefined
-                      }
-                    />
-                  ))
+                  serviceOptions.map((item) => {
+                    const priceLabel =
+                      item.price || item.price === 0
+                        ? formatPriceLabel(item.price, t)
+                        : undefined;
+                    const currentPriceValue = parseNumberParam(item.price);
+                    const originalPriceValue = getOriginalPriceValue(item);
+                    const originalPriceLabel =
+                      shouldShowOriginalPrice(currentPriceValue, originalPriceValue)
+                        ? formatPriceLabel(originalPriceValue, t)
+                        : undefined;
+
+                    return (
+                      <ServiceCard
+                        key={item.id}
+                        service={item}
+                        selected={selectedServiceId === item.id}
+                        onSelect={handleServiceSelect}
+                        durationLabel={formatDurationLabel(
+                          item.duration_minutes,
+                          t
+                        )}
+                        priceLabel={priceLabel}
+                        originalPriceLabel={originalPriceLabel}
+                      />
+                    );
+                  })
                 )}
               </div>
 
@@ -1552,15 +1654,34 @@ export default function HomeServiceBookingForm({
                     {area}
                   </p>
                 </div>
-                <div>
-                  <span className="text-slate-500">
-                    العنوان:
-                  </span>
+              <div>
+                <span className="text-slate-500">
+                  العنوان:
+                </span>
                   <p className="font-medium text-slate-800">
                     {address}
                   </p>
                 </div>
               </div>
+              {selectedServicePriceLabel && (
+                <div className="mt-4 text-sm text-slate-600">
+                  <span className="text-slate-500">
+                    {t("book.detail.price", {
+                      defaultValue: "Price:",
+                    })}
+                  </span>
+                  <div className="mt-1 flex items-center gap-2 font-medium text-slate-800">
+                    <RiyalIcon size={16} />
+                    <span>{selectedServicePriceLabel}</span>
+                  </div>
+                  {selectedServiceOriginalPriceLabel && (
+                    <div className="mt-1 flex items-center gap-1 text-xs text-slate-400 line-through">
+                      <RiyalIcon size={12} />
+                      <span>{selectedServiceOriginalPriceLabel}</span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="text-xs text-slate-500 text-center mb-6">

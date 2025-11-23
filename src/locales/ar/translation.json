@@ -45,7 +45,7 @@
     "title": "قائمة الأسعار",
     "note": "الأسعار شاملة ضريبة القيمة المضافة",
     "searchPlaceholder": "بحث عن الخدمات",
-    "sampleItem": "خدمة تجريبية — 100 ر.س",
+    "sampleItem": "خدمة تجريبية — 100 ",
     "categories": {
       "hair": "قسم قص الشعر",
       "nails": "قسم الأظافر",
@@ -61,7 +61,7 @@
   },
 
   "home": {
-    "location": "الرياض - السعودية / Riyadh, Saudi",
+    "location": "شارع اسطنبول، حي الفيحاء، الرياض، المملكة العربية السعودية / Istanbul Street, Al Faiha, Riyadh, Saudi Arabia",
     "buttons": {
       "book": { "primary": "احجز", "secondary": "Book" },
       "prices": { "primary": "قائمة الأسعار", "secondary": "Prices" , "salonName": "صالون {{salonName}}" },
@@ -320,24 +320,47 @@
   },
 
   "contact": {
+    "badge": "ابقِ على تواصل",
     "title": "تواصل معنا",
-    "subtitle": "اسألي عن المواعيد، الأسعار، العروض أو أي استفسار. فريقنا موجود لمساعدتك 👇",
+    "subtitle": "اسألي عن المواعيد، الأسعار، العروض أو أي استفسار. فريقنا موجود لمساعدتك ",
+    "infoTitle": "معلومات التواصل",
     "locationLabel": "الموقع",
+    "locationValue": "شارع اسطنبول، حي الفيحاء، الرياض، المملكة العربية السعودية / Istanbul Street, Al Faiha, Riyadh, Saudi Arabia",
     "phoneLabel": "الهاتف / واتساب",
-    "phoneValue": "+966 5X XXX XXXX",
+    "phoneValue": "+966 538 216 056",
+    "whatsappCTA": "راسلنا على واتساب",
     "hoursLabel": "ساعات العمل",
     "hoursValue": "يومياً 10 صباحًا - 11 مساءً",
     "mapLabel": "الموقع على الخريطة",
-    "mapPlaceholder": "خريطة الموقع (يمكن إضافة Google Maps هنا)",
-    "whatsappCTA": "راسلنا على واتساب",
+    "mapDescription": "شاهد موقعنا في الرياض. اضغطي على الرابط لفتحه في خرائط Google.",
+    "mapLinkCTA": "افتح في خرائط Google",
     "formTitle": "أرسلي رسالة",
     "formSubtitle": "اسألي عن أي خدمة وسنرد عليك بأقرب وقت.",
+    "sentTitle": "تم إرسال رسالتك بنجاح!",
+    "sentMessage": "شكرًا لتواصلك معنا! سنعود إليك قريبًا.",
+    "sendAnother": "إرسال رسالة أخرى",
+    "errorMessage": "تعذر إرسال الرسالة الآن. يرجى المحاولة لاحقًا.",
     "name": "الاسم",
+    "namePlaceholder": "أدخل اسمك الكامل",
     "phone": "رقم الجوال",
+    "phonePlaceholder": "مثال: +966 5XXXXXXXX",
     "msg": "رسالتك / سؤالك",
+    "msgPlaceholder": "أخبرينا كيف نساعدك",
     "sending": "جاري الإرسال...",
     "submit": "إرسال",
-    "sent": "تم إرسال رسالتك بنجاح  "
+    "privacyNote": "بياناتك محمية وسيتم استخدامها للرد على استفسارك فقط.",
+    "support": {
+      "title": "دعم سريع",
+      "desc": "رد خلال 24 ساعة"
+    },
+    "availability": {
+      "title": "متاحين دائمًا",
+      "desc": "نرد عليك طوال أيام الأسبوع"
+    },
+    "expertise": {
+      "title": "خبراء متخصصون",
+      "desc": "نصائح احترافية واستشارات مجانية"
+    }
   },
 
   "sidebar": {
@@ -563,47 +586,73 @@
   },
 
   "offers": {
-    "offerTitle": "عنوان العرض",
-    "titlePlaceholder": "مثال: تخفيضات الصيف",
-    "category": "الفئة",
-    "categoryPlaceholder": "مثال: شعر، مكياج",
-    "originalPrice": "السعر الأصلي",
-    "discountPercentage": "نسبة الخصم %",
-    "discountAmount": "قيمة الخصم",
-    "finalPrice": "السعر النهائي",
-    "maxUses": "الحد الأقصى للاستخدامات",
-    "startDate": "تاريخ البدء",
-    "endDate": "تاريخ الانتهاء",
-    "termsConditions": "الشروط والأحكام",
-    "termsPlaceholder": "أدخل الشروط والأحكام...",
-    "active": "نشط",
-    "priceSummary": "ملخص الأسعار",
-    "offersList": "قائمة العروض",
-    "noOffers": "لا توجد عروض بعد",
-    "noOffersDesc": "ابدأ بإنشاء أول عرض تخفيض لعملائك.",
-    "addFirstOffer": "أضف أول عرض",
-    "inactive": "غير نشط",
-    "expired": "منتهي",
-    "price": "السعر",
-    "endsIn": "ينتهي في",
-    "days": "أيام",
-    "usage": "الاستخدام",
-    "deactivate": "إيقاف",
-    "activate": "تفعيل",
-    "confirmDeleteTitle": "تأكيد الحذف",
-    "confirmDelete": "هل أنت متأكد من حذف هذا العرض؟ لا يمكن التراجع عن هذا الإجراء.",
-    "discountNote": "ملاحظة: استخدم إما نسبة الخصم أو قيمة الخصم، وليس كلاهما",
-    
-    "bothDiscountsError": "لا يمكن إدخال نسبة الخصم وقيمة الخصم معاً",
-    "invalidDiscountPercentage": "نسبة الخصم يجب أن تكون بين 0 و 100",
-    "invalidDiscountAmount": "قيمة الخصم لا يمكن أن تكون سالبة",
-    "invalidOriginalPrice": "السعر الأصلي لا يمكن أن يكون سالب",
-    "invalidFinalPrice": "السعر النهائي لا يمكن أن يكون سالب",
-
-    "totalOffers": "إجمالي العروض",
-    "activeOffers": "العروض النشطة",
-    "expiredOffers": "العروض المنتهية",
-    "totalUses": "إجمالي الاستخدامات"
+    "title": "العروض والحسومات الخاصة",
+    "subtitle": "استفد من عروضنا الحصرية واحصل على أفضل الخدمات بأسعار مميزة",
+    "all": "جميع العروض",
+    "area": "المنطقة",
+    "areaNote": "اختر منطقتك لتحديد الخدمات المتاحة",
+    "search": "بحث العروض",
+    "searchPlaceholder": "ابحث في العروض...",
+    "booked": "تم حجز العرض بنجاح! سنتواصل معك قريباً.",
+    "terms": "الشروط والأحكام",
+    "book": "احجز العرض",
+    "featured": "مميز",
+    "remaining": "متبقي {{count}}",
+    "validUntil": "ينتهي في",
+    "unavailable": "غير متاح للحجز أونلاين",
+    "save": "وفرت {{amount}} ",
+    "discount": "خصم {{percentage}}%",
+    "discountAmount": "خصم {{amount}} ",
+    "categoryLabel": "الفئة",
+    "durationVaries": "المدة قد تختلف",
+    "durationMinutes": "{{minutes}} دقيقة",
+    "durationHours": "{{hours}} ساعة",
+    "durationHoursMinutes": "{{hours}} ساعة و {{minutes}} دقيقة",
+    "stats": {
+      "available": "العروض المتاحة",
+      "showing": "النتائج المعروضة",
+      "average": "متوسط التوفير"
+    },
+    "sortLabel": "ترتيب حسب",
+    "sort": {
+      "newest": "الأحدث",
+      "discount": "أعلى خصم",
+      "priceLow": "السعر (منخفض إلى مرتفع)",
+      "priceHigh": "السعر (مرتفع إلى منخفض)",
+      "ending": "تنتهي قريباً"
+    },
+    "noOffers": "لا توجد عروض متاحة",
+    "noResults": "لم نعثر على عروض مطابقة",
+    "noOffersDescription": "عروض جديدة في الطريق، تحقق لاحقًا.",
+    "noResultsDescription": "جرب توسيع البحث أو إعادة تعيين الفلاتر.",
+    "showAll": "عرض جميع العروض",
+    "help": {
+      "title": "تحتاج مساعدة؟",
+      "description": "فريقنا جاهز لمساعدتك في اختيار العرض الأنسب لك",
+      "consult": "اتصل بنا للاستشارة"
+    },
+    "loading": {
+      "title": "جاري تحميل العروض",
+      "description": "نستعد لعرض أفضل التخفيضات والعروض الخاصة"
+    },
+    "error": {
+      "title": "عذراً، حدث خطأ",
+      "retry": "إعادة المحاولة"
+    },
+    "booking": {
+      "promptName": "أدخل اسمك الكامل",
+      "promptPhone": "أدخل رقم الجوال",
+      "promptDate": "حدد تاريخ الحجز (YYYY-MM-DD)",
+      "promptTime": "حدد وقت الحجز (HH:MM)",
+      "promptEmail": "البريد الإلكتروني (اختياري)",
+      "promptNotes": "أي ملاحظات؟ (اختياري)",
+      "requiredName": "الاسم مطلوب",
+      "requiredPhone": "رقم الجوال مطلوب",
+      "noService": "هذا العرض غير مرتبط بخدمة",
+      "success": "تم استلام طلب الحجز وسنؤكد قريباً.",
+      "failure": "تعذر حجز العرض حالياً. حاول مرة أخرى لاحقاً.",
+      "loading": "جارٍ الحجز..."
+    }
   },
 
   "toast": {
@@ -656,9 +705,9 @@
     "featured": "مميز",
     "remaining": "متبقي {{count}}",
     "validUntil": "ينتهي في",
-    "save": "وفرت {{amount}} ر.س",
+    "save": "وفرت {{amount}} ",
     "discount": "خصم {{percentage}}%",
-    "discountAmount": "خصم {{amount}} ر.س",
+    "discountAmount": "خصم {{amount}} ",
     "terms": "الشروط والأحكام",
     "bookOffer": "احجز العرض"
   },
@@ -666,11 +715,6 @@
     "noOffers": "لا توجد عروض متاحة",
     "noResults": "لم نعثر على عروض تطابق بحثك",
     "showAll": "عرض جميع العروض"
-  },
-  "contact": {
-    "help": "هل تحتاج مساعدة في الاختيار؟",
-    "assistance": "فريقنا مستعد لمساعدتك في اختيار أفضل عرض يناسب احتياجاتك",
-    "consultation": "اتصل بنا للاستشارة"
   },
   "loading": "جاري تحميل العروض",
   "loadingSubtitle": "نستعد لعرض أفضل العروض والحسومات الخاصة",
@@ -795,7 +839,7 @@
     "error": "خطأ",
     "success": "نجح",
     "saving": "جاري الحفظ...",
-    "currency": "ر.س",
+    "currency": "",
     "serviceNA": "الخدمة غير متوفرة",
     "clear": "مسح",
     "actions": "الإجراءات",
