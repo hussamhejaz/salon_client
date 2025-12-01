@@ -104,6 +104,15 @@ function formatPriceLabel(price, t) {
   return `${Math.round(numeric).toLocaleString()} ر.س`;
 }
 
+// Use local date parts to avoid timezone shifts when formatting YYYY-MM-DD
+function formatLocalDate(date) {
+  if (!date) return "";
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 const parseNumberParam = (value) => {
   if (value === null || value === undefined) {
     return undefined;
@@ -636,7 +645,7 @@ export default function BookingForm({ salonId }) {
     // 2️⃣ Fallback: fetch from /hours
     const controller = new AbortController();
     const params = new URLSearchParams();
-    params.set("date", selectedDate.toISOString().slice(0, 10));
+    params.set("date", formatLocalDate(selectedDate));
     if (selectedService.duration_minutes) {
       params.set("duration_minutes", String(selectedService.duration_minutes));
     }
@@ -783,7 +792,7 @@ export default function BookingForm({ salonId }) {
         customer_email: email.trim() || null,
         customer_notes: notes.trim() || null,
         service_id: selectedService.id,
-        booking_date: selectedDate.toISOString().slice(0, 10),
+        booking_date: formatLocalDate(selectedDate),
         booking_time: selectedTime,
         duration_minutes: selectedService.duration_minutes || undefined,
         total_price:
@@ -1165,7 +1174,7 @@ export default function BookingForm({ salonId }) {
 
             {/* Date & Time */}
             <div className="bg-white rounded-3xl shadow-xl p-6 border border-slate-100">
-              <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+              <h4 className="text-xl font-bold text-slate-900 mb-6 flex itemscenter gap-3">
                 <div className="w-2 h-6 rounded-full bg-amber-500"></div>
                 {t("book.chooseDateTime", { defaultValue: "اختر التاريخ والوقت" })}
               </h4>
