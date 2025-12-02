@@ -97,12 +97,12 @@ export default function Footer() {
 
           <span className="opacity-30">•</span>
 
-          {/* <Link
+          <Link
             to="/booking"
             className="hover:text-slate-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
           >
             {t("nav.book")}
-          </Link> */}
+          </Link>
         </div>
       </div>
     </footer>
