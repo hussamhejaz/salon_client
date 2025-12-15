@@ -92,6 +92,12 @@
     "loadingServices": "جارٍ تحميل الخدمات...",
     "loadingLinkedService": "جارٍ تحميل الخدمة المختارة...",
     "chooseDateTime": "اختر التاريخ والوقت",
+    "chooseEmployee": "اختر المصفف/الموظف (اختياري)",
+    "anyEmployee": "أي موظف",
+    "loadingEmployees": "جارٍ تحميل الفريق...",
+    "noEmployees": "لا يوجد موظفون نشطون حاليًا.",
+    "employeeFallback": "أحد الفريق",
+    "noEmployeesForService": "لا يوجد موظفون متاحون لهذه الخدمة حالياً، سنختار أي موظف متاح.",
     "availableTimes": "الأوقات المتاحة",
     "chooseServiceFirst": "اختر خدمة أولاً لعرض الأوقات المتاحة.",
     "loadingSlots": "جارٍ تحديث الأوقات...",
@@ -111,6 +117,14 @@
     "statusPending": "قيد المراجعة",
     "newBooking": "احجز خدمة أخرى",
     "confirmBooking": "تأكيد الحجز",
+    "staffAvailableTitle": "طاقم العمل المتاح لهذه الخدمة",
+    "noSlotsForEmployee": "لا توجد أوقات متاحة لهذا الموظف. جرّبي اختيار موظف آخر أو أي موظف.",
+    "clearEmployeeFilter": "إلغاء اختيار الموظف",
+    "stepService": "الخدمة",
+    "stepEmployee": "الموظف",
+    "stepDateTime": "التاريخ والوقت",
+    "stepInfo": "البيانات",
+    "stepConfirm": "التأكيد",
     "step1": "الخدمة والموعد",
     "step2": "المعلومات الشخصية",
     "step3": "التأكيد",
@@ -120,7 +134,8 @@
       "service": "الخدمة:",
       "datetime": "التاريخ والوقت:",
       "duration": "المدة:",
-      "status": "الحالة:"
+      "status": "الحالة:",
+      "employee": "الموظف/المصفف:"
     }
   },
   "navigation": {

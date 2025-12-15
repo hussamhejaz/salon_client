@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { usePublicSection } from "../../hooks/usePublicSection";
+import { usePublicEmployees } from "../../hooks/usePublicEmployees";
 
 const BRAND = "#E39B34";
 const BRAND_SOFT = "rgba(227,155,52,0.08)";
@@ -27,6 +28,11 @@ export default function ServiceDetailsPage({ salonId }) {
   const { sectionId } = useParams();
   
   const { section, salonData, loading, error } = usePublicSection(salonId, sectionId);
+  const {
+    employees: serviceEmployees,
+    loading: employeesLoading,
+    error: employeesError,
+  } = usePublicEmployees(salonId, sectionId);
 
   const brandColor = salonData?.brand_color || BRAND;
   const gradientClass = section ? gradientClasses[section.icon_key] || gradientClasses.default : gradientClasses.default;
@@ -199,6 +205,52 @@ export default function ServiceDetailsPage({ salonId }) {
                 </div>
               </div>
             )}
+
+            {/* Staff available for this service */}
+            <div className="mb-10">
+              <h2 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                <div className="w-2 h-8 rounded-full" style={{ backgroundColor: brandColor }}></div>
+                {t("book.staffAvailableTitle", { defaultValue: "طاقم العمل المتاح لهذه الخدمة" })}
+              </h2>
+              {employeesLoading ? (
+                <div className="flex items-center gap-2 text-sm text-slate-500">
+                  <div className="w-8 h-8 border-4 border-amber-300 border-t-transparent rounded-full animate-spin" />
+                  {t("book.loadingEmployees", { defaultValue: "جارٍ تحميل الفريق..." })}
+                </div>
+              ) : employeesError ? (
+                <div className="text-sm text-rose-600 flex items-center gap-2">
+                  <span>⚠️</span>
+                  {employeesError}
+                </div>
+              ) : serviceEmployees && serviceEmployees.length > 0 ? (
+                <div className="grid md:grid-cols-2 gap-4">
+                  {serviceEmployees.map((employee) => (
+                    <div
+                      key={employee.id || employee.name}
+                      className="p-4 rounded-2xl border border-slate-200 bg-slate-50"
+                    >
+                      <div className="font-semibold text-slate-800">
+                        {employee.name || employee.full_name || employee.employee_name}
+                      </div>
+                      {employee.role && (
+                        <div className="text-sm text-slate-600 mt-1">{employee.role}</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-700">
+                  <div className="font-semibold text-slate-800 mb-1">
+                    {t("book.anyEmployee", { defaultValue: "أي موظف" })}
+                  </div>
+                  <p className="text-slate-600">
+                    {t("book.noEmployeesForService", {
+                      defaultValue: "لا يوجد موظفون مرتبطون بهذه الخدمة، سيتم اختيار أي موظف متاح.",
+                    })}
+                  </p>
+                </div>
+              )}
+            </div>
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-center pt-8 border-t border-slate-200">

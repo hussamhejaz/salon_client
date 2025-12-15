@@ -4,13 +4,11 @@ import { useLocation, useSearchParams } from "react-router-dom";
 
 import i18n from "../../i18n.js"; // Import i18n instance
 import { API_BASE } from "../../config/api";
+import { usePublicEmployees } from "../../hooks/usePublicEmployees";
 import { usePublicServices } from "../../hooks/usePublicServices";
 import RiyalIcon from "../RiyalIcon";
 
 const BRAND = "#E39B34";
-const BRAND_DARK = "#CF8A2B";
-const BRAND_SOFT = "rgba(227,155,52,0.08)";
-const BRAND_LIGHT = "rgba(227,155,52,0.04)";
 
 /* ---------- Helper Functions ---------- */
 const sameDay = (a, b) =>
@@ -144,6 +142,8 @@ function shouldShowOriginalPrice(currentValue, originalValue) {
   if (currentValue === undefined || originalValue === undefined) return false;
   return originalValue > currentValue;
 }
+
+// normalizeId removed (unused helper)
 
 /* ---------- Calendar Components ---------- */
 function CalendarHeader({ currentMonth, onPrevious, onNext, canGoPrevious, canGoNext }) {
@@ -362,6 +362,60 @@ function ServiceCard({
   );
 }
 
+function EmployeeCard({
+  employee,
+  onSelect,
+  selected,
+  brandColor,
+  allowAny = false,
+  fallbackLabel,
+}) {
+  const name = employee?.name || employee?.full_name || employee?.employee_name;
+  const role = employee?.role || employee?.position || employee?.job_title;
+  const isAny = allowAny;
+
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(employee?.id || null)}
+      className={`
+        w-full p-4 rounded-xl border-2 text-left transition-all duration-300
+        flex items-start gap-3
+        ${
+          selected
+            ? "border-amber-500 bg-amber-50 shadow-sm"
+            : "border-slate-200 bg-white hover:border-amber-300 hover:shadow-sm"
+        }
+      `}
+    >
+      <div
+        className={`
+          w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-semibold
+          ${selected ? "bg-amber-500 text-white" : "bg-slate-100 text-slate-600"}
+        `}
+      >
+        {isAny ? "★" : name?.charAt(0) || "✧"}
+      </div>
+      <div className="flex-1 space-y-1">
+        <h4 className={`font-semibold ${selected ? "text-amber-700" : "text-slate-800"}`}>
+          {name || (isAny ? fallbackLabel || "Any staff" : fallbackLabel || "Team member")}
+        </h4>
+        {role && <p className="text-sm text-slate-600">{role}</p>}
+      </div>
+      {selected && (
+        <div
+          className="w-6 h-6 rounded-full flex items-center justify-center"
+          style={{ backgroundColor: brandColor || BRAND }}
+        >
+          <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      )}
+    </button>
+  );
+}
+
 /* ---------- Main Component ---------- */
 export default function BookingForm({ salonId }) {
   const { t, i18n: i18nHook } = useTranslation();
@@ -396,6 +450,7 @@ export default function BookingForm({ salonId }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedServiceId, setSelectedServiceId] = useState("");
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -416,7 +471,6 @@ export default function BookingForm({ salonId }) {
   const [linkedServiceError, setLinkedServiceError] = useState("");
   const [linkedServiceAppliedId, setLinkedServiceAppliedId] = useState(null);
   const userSelectedServiceRef = useRef(false);
-
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   useEffect(() => {
@@ -431,7 +485,6 @@ export default function BookingForm({ salonId }) {
 
   const { services: fetchedServices, loading: servicesLoading, error: servicesError } =
     usePublicServices(salonId);
-
   const fallbackServices = useMemo(
     () => [
       {
@@ -517,7 +570,28 @@ export default function BookingForm({ salonId }) {
     () => serviceOptions.find((item) => item.id === selectedServiceId),
     [serviceOptions, selectedServiceId]
   );
-
+  const employeeServiceId = selectedService?.id || linkedServiceId || null;
+  const {
+    employees: serviceEmployees,
+    loading: employeesLoading,
+    error: employeesError,
+  } = usePublicEmployees(salonId, employeeServiceId);
+  const selectedEmployee = useMemo(
+    () =>
+      serviceEmployees?.find(
+        (employee) => String(employee.id) === String(selectedEmployeeId)
+      ),
+    [serviceEmployees, selectedEmployeeId]
+  );
+  const hasEmployeeFilter =
+    selectedEmployeeId !== null &&
+    selectedEmployeeId !== undefined &&
+    selectedEmployeeId !== "";
+  const selectedEmployeeLabel = hasEmployeeFilter
+    ? selectedEmployee?.name ||
+      selectedEmployee?.full_name ||
+      t("book.employeeFallback", { defaultValue: "أحد الفريق" })
+    : t("book.anyEmployee", { defaultValue: "أي متاح" });
   const selectedServicePriceValue = parseNumberParam(selectedService?.price);
   const selectedServiceOriginalPriceValue = getOriginalPriceValue(selectedService);
   const selectedServicePriceLabel =
@@ -530,6 +604,13 @@ export default function BookingForm({ salonId }) {
       : undefined;
 
   const slotLocale = i18nHook.language || "en-US";
+  const steps = [
+    { id: 1, label: t("book.stepService", { defaultValue: "Service" }) },
+    { id: 2, label: t("book.stepEmployee", { defaultValue: "Staff" }) },
+    { id: 3, label: t("book.stepDateTime", { defaultValue: "Date & Time" }) },
+    { id: 4, label: t("book.stepInfo", { defaultValue: "Customer" }) },
+    { id: 5, label: t("book.stepConfirm", { defaultValue: "Confirm" }) },
+  ];
   const handleServiceSelect = (serviceId) => {
     userSelectedServiceRef.current = true;
     setSelectedServiceId(serviceId);
@@ -612,7 +693,7 @@ export default function BookingForm({ salonId }) {
     };
   }, [linkedServiceId, linkedServiceAppliedId, fetchedServices, salonId, today]);
 
-  // 🔴 UPDATED EFFECT: use service.time_slots if present, otherwise call /hours
+  // 🔴 UPDATED EFFECT: use service.time_slots if present (unless filtering by employee), otherwise call availability API
   useEffect(() => {
     if (!selectedService || !selectedDate || !salonId) {
       setAvailableSlots([]);
@@ -628,7 +709,7 @@ export default function BookingForm({ salonId }) {
       Array.isArray(selectedService.time_slots) && selectedService.time_slots.length > 0;
 
     // 1️⃣ Use time_slots from service if they exist
-    if (hasServiceSlots) {
+    if (hasServiceSlots && !hasEmployeeFilter) {
       const slots = collectSlotTimes({
         time_slots: selectedService.time_slots,
       });
@@ -642,7 +723,7 @@ export default function BookingForm({ salonId }) {
       return; // don't call API
     }
 
-    // 2️⃣ Fallback: fetch from /hours
+    // 2️⃣ Fallback: fetch from availability API
     const controller = new AbortController();
     const params = new URLSearchParams();
     params.set("date", formatLocalDate(selectedDate));
@@ -650,6 +731,9 @@ export default function BookingForm({ salonId }) {
       params.set("duration_minutes", String(selectedService.duration_minutes));
     }
     params.set("service_id", selectedService.id);
+    if (hasEmployeeFilter) {
+      params.set("employee_id", selectedEmployeeId);
+    }
     params.set("type", "salon");
 
     const fetchSlots = async () => {
@@ -657,7 +741,7 @@ export default function BookingForm({ salonId }) {
         setSlotsLoading(true);
         setSlotsError("");
         const response = await fetch(
-          `${API_BASE}/api/public/${salonId}/hours?${params.toString()}`,
+          `${API_BASE}/api/public/${salonId}/bookings/availability?${params.toString()}`,
           { signal: controller.signal }
         );
         const data = await response.json();
@@ -705,7 +789,7 @@ export default function BookingForm({ salonId }) {
     return () => {
       controller.abort();
     };
-  }, [selectedService, selectedDate, salonId, t]);
+  }, [selectedService, selectedDate, salonId, t, hasEmployeeFilter, selectedEmployeeId]);
 
   useEffect(() => {
     if (selectedTime && !availableSlots.includes(selectedTime)) {
@@ -714,8 +798,13 @@ export default function BookingForm({ salonId }) {
   }, [availableSlots, selectedTime]);
 
   useEffect(() => {
+    setSelectedEmployeeId(null);
     setSelectedTime("");
   }, [selectedServiceId]);
+
+  useEffect(() => {
+    setSelectedTime("");
+  }, [selectedEmployeeId]);
 
   // Calendar navigation
   const nextMonth = () => {
@@ -739,6 +828,68 @@ export default function BookingForm({ salonId }) {
     const next = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
     return next <= maxDate;
   };
+
+  const totalSteps = steps.length;
+
+  const goToNext = () => {
+    setFormError("");
+
+    if (!selectedService) {
+      setErrors((prev) => ({
+        ...prev,
+        service: t("form.err.service", { defaultValue: "الرجاء اختيار الخدمة." }),
+      }));
+      setFormError(
+        t("book.validationFailed", {
+          defaultValue: "يرجى إكمال الحقول المطلوبة قبل تأكيد الحجز.",
+        })
+      );
+      return;
+    }
+
+    if (currentStep === 3 && (!selectedDate || !selectedTime)) {
+      setErrors((prev) => ({
+        ...prev,
+        date: !selectedDate
+          ? t("form.err.date", { defaultValue: "الرجاء اختيار تاريخ." })
+          : prev.date,
+        time: !selectedTime
+          ? t("form.err.time", { defaultValue: "الرجاء اختيار الوقت." })
+          : prev.time,
+      }));
+      setFormError(
+        t("book.validationFailed", {
+          defaultValue: "يرجى إكمال الحقول المطلوبة قبل تأكيد الحجز.",
+        })
+      );
+      return;
+    }
+
+    if (currentStep === 4) {
+      const eMap = validate();
+      setErrors(eMap);
+      if (Object.keys(eMap).length) {
+        setFormError(
+          t("book.validationFailed", {
+            defaultValue: "يرجى إكمال الحقول المطلوبة قبل تأكيد الحجز.",
+          })
+        );
+        return;
+      }
+    }
+
+    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+  };
+
+  const goToPrevious = () => {
+    setFormError("");
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  const isNextDisabled =
+    (currentStep === 1 && !selectedService) ||
+    (currentStep === 2 && !selectedService) ||
+    (currentStep === 3 && (!selectedDate || !selectedTime));
 
   function validate() {
     const e = {};
@@ -792,6 +943,7 @@ export default function BookingForm({ salonId }) {
         customer_email: email.trim() || null,
         customer_notes: notes.trim() || null,
         service_id: selectedService.id,
+        employee_id: hasEmployeeFilter ? selectedEmployeeId : null,
         booking_date: formatLocalDate(selectedDate),
         booking_time: selectedTime,
         duration_minutes: selectedService.duration_minutes || undefined,
@@ -823,7 +975,7 @@ export default function BookingForm({ salonId }) {
         booking: data.booking,
         message: data.message,
       });
-      setCurrentStep(3);
+      setCurrentStep(steps.length);
     } catch (error) {
       console.error("Booking request failed:", error);
       const message =
@@ -852,6 +1004,7 @@ export default function BookingForm({ salonId }) {
     setSelectedDate(null);
     setSelectedTime("");
     setSelectedServiceId("");
+    setSelectedEmployeeId(null);
     setName("");
     setPhone("");
     setEmail("");
@@ -869,9 +1022,6 @@ export default function BookingForm({ salonId }) {
     setLinkedServiceAppliedId(null);
     userSelectedServiceRef.current = false;
   };
-
-  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
-  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
   if (confirmation) {
     const { booking, message } = confirmation;
@@ -895,6 +1045,13 @@ export default function BookingForm({ salonId }) {
       booking?.duration_minutes || selectedService?.duration_minutes,
       t
     );
+    const confirmationEmployeeName =
+      booking?.employee?.name ||
+      booking?.employee?.full_name ||
+      booking?.employee_name ||
+      booking?.employeeName ||
+      selectedEmployee?.name ||
+      selectedEmployee?.full_name;
     const confirmationPriceRaw =
       booking?.total_price ??
       booking?.price ??
@@ -912,7 +1069,6 @@ export default function BookingForm({ salonId }) {
       )
         ? formatPriceLabel(confirmationOriginalPriceValue, t)
         : undefined;
-
     return (
       <section className="max-w-2xl mx-auto px-4">
         <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 text-center border border-emerald-100">
@@ -977,6 +1133,18 @@ export default function BookingForm({ salonId }) {
                     t("book.statusPending", { defaultValue: "Pending review" })}
                 </p>
               </div>
+              {confirmationEmployeeName && (
+                <div>
+                  <span className="text-slate-500">
+                    {t("book.detail.employee", {
+                      defaultValue: "Employee:",
+                    })}
+                  </span>
+                  <p className="font-medium text-slate-800">
+                    {confirmationEmployeeName}
+                  </p>
+                </div>
+              )}
               {confirmationPriceLabel && (
                 <div className="mt-4 text-sm text-slate-600">
                   <span className="text-slate-500">
@@ -1017,30 +1185,30 @@ export default function BookingForm({ salonId }) {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Progress Steps */}
       <div className="max-w-2xl mx-auto mb-12">
         <div className="flex items-center justify-between mb-8">
-          {[1, 2, 3].map((step) => (
-            <div key={step} className="flex items-center flex-1">
+          {steps.map((step, idx) => (
+            <div key={step.id} className="flex items-center flex-1">
               <div
                 className={`
                 w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm
                 transition-all duration-300
                 ${
-                  currentStep >= step
+                  currentStep >= step.id
                     ? "bg-amber-500 text-white shadow-lg"
                     : "bg-slate-200 text-slate-500"
                 }
               `}
               >
-                {step}
+                {step.id}
               </div>
-              {step < 3 && (
+              {idx < steps.length - 1 && (
                 <div
                   className={`
                   flex-1 h-1 mx-2 transition-all duration-300
-                  ${currentStep > step ? "bg-amber-500" : "bg-slate-200"}
+                  ${currentStep > step.id ? "bg-amber-500" : "bg-slate-200"}
                 `}
                 />
               )}
@@ -1048,28 +1216,17 @@ export default function BookingForm({ salonId }) {
           ))}
         </div>
 
-        <div className="grid grid-cols-3 text-sm text-center">
-          <div
-            className={`font-medium ${
-              currentStep >= 1 ? "text-amber-600" : "text-slate-500"
-            }`}
-          >
-            {t("book.step1", "الخدمة والموعد")}
-          </div>
-          <div
-            className={`font-medium ${
-              currentStep >= 2 ? "text-amber-600" : "text-slate-500"
-            }`}
-          >
-            {t("book.step2", "المعلومات الشخصية")}
-          </div>
-          <div
-            className={`font-medium ${
-              currentStep >= 3 ? "text-amber-600" : "text-slate-500"
-            }`}
-          >
-            {t("book.step3", "التأكيد")}
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-5 text-sm text-center gap-2">
+          {steps.map((step) => (
+            <div
+              key={step.id}
+              className={`font-medium ${
+                currentStep >= step.id ? "text-amber-600" : "text-slate-500"
+              }`}
+            >
+              {step.label}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -1088,196 +1245,295 @@ export default function BookingForm({ salonId }) {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {/* Step 1: Service & Date Selection */}
+        {/* Step 1: Service Selection */}
         {currentStep === 1 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Services */}
-            <div className="bg-white rounded-3xl shadow-xl p-6 border border-slate-100">
-              <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                <div className="w-2 h-6 rounded-full bg-amber-500"></div>
-                {t("book.chooseService", { defaultValue: "اختر الخدمة" })}
-              </h4>
+          <div className="bg-white rounded-3xl shadow-xl p-6 border border-slate-100">
+            <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+              <div className="w-2 h-6 rounded-full bg-amber-500"></div>
+              {t("book.chooseService", { defaultValue: "اختر الخدمة" })}
+            </h4>
 
-              <div className="space-y-4">
-                {servicesLoading ? (
-                  <div className="h-36 flex items-center justify-center text-sm text-slate-500 space-x-2">
-                    <div
-                      className="w-10 h-10 border-4 border-amber-300 border-t-transparent rounded-full animate-spin"
-                      style={{ borderLeftColor: BRAND }}
-                    />
-                    <span>
-                      {t("book.loadingServices", {
-                        defaultValue: "جاري تحميل الخدمات...",
-                      })}
-                    </span>
-                  </div>
-                ) : (
-                  serviceOptions.map((item) => {
-                    const priceLabel =
-                      item.price || item.price === 0
-                        ? formatPriceLabel(item.price, t)
-                        : undefined;
-                    const currentPriceValue = parseNumberParam(item.price);
-                    const originalPriceValue = getOriginalPriceValue(item);
-                    const originalPriceLabel =
-                      shouldShowOriginalPrice(currentPriceValue, originalPriceValue)
-                        ? formatPriceLabel(originalPriceValue, t)
-                        : undefined;
-
-                    return (
-                      <ServiceCard
-                        key={item.id}
-                        service={item}
-                        selected={selectedServiceId === item.id}
-                        onSelect={handleServiceSelect}
-                        durationLabel={formatDurationLabel(
-                          item.duration_minutes,
-                          t
-                        )}
-                        priceLabel={priceLabel}
-                        originalPriceLabel={originalPriceLabel}
-                      />
-                    );
-                  })
-                )}
-              </div>
-
-              {linkedServiceId && linkedServiceLoading && (
-                <p className="mt-4 text-sm text-slate-500 flex items-center gap-2">
-              <span className="w-4 h-4 border-2 border-amber-300 border-t-transparent rounded-full animate-spin inline-block" />
-                  {t("book.loadingLinkedService", {
-                    defaultValue: "جاري تحميل الخدمة المختارة...",
-                  })}
-                </p>
-              )}
-              {linkedServiceId && linkedServiceError && (
-                <p className="mt-4 text-sm text-rose-600 flex items-center gap-2">
-                  <span>⚠️</span>
-                  {linkedServiceError}
-                </p>
-              )}
-
-              {servicesError && (
-                <p className="mt-4 text-sm text-rose-600 flex items-center gap-2">
-                  <span>⚠️</span>
-                  {servicesError}
-                </p>
-              )}
-
-              {errors.service && (
-                <p className="mt-4 text-sm text-rose-600 flex items-center gap-2">
-                  <span>⚠️</span>
-                  {errors.service}
-                </p>
-              )}
-            </div>
-
-            {/* Date & Time */}
-            <div className="bg-white rounded-3xl shadow-xl p-6 border border-slate-100">
-              <h4 className="text-xl font-bold text-slate-900 mb-6 flex itemscenter gap-3">
-                <div className="w-2 h-6 rounded-full bg-amber-500"></div>
-                {t("book.chooseDateTime", { defaultValue: "اختر التاريخ والوقت" })}
-              </h4>
-
-              {/* Calendar */}
-              <div className="mb-6">
-                <CalendarHeader
-                  currentMonth={currentMonth}
-                  onPrevious={previousMonth}
-                  onNext={nextMonth}
-                  canGoPrevious={canGoPrevious()}
-                  canGoNext={canGoNext()}
-                />
-
-                <CalendarGrid
-                  month={currentMonth}
-                  selectedDate={selectedDate}
-                  onDateSelect={setSelectedDate}
-                  today={today}
-                />
-
-                {errors.date && (
-                  <p className="mt-3 text-sm text-rose-600 flex items-center gap-2">
-                    <span>⚠️</span>
-                    {errors.date}
-                  </p>
-                )}
-              </div>
-
-              {selectedDate && (
-                <div>
-                  <h5 className="font-semibold text-slate-800 mb-4">
-                    {t("book.availableTimes", {
-                      defaultValue: "الأوقات المتاحة",
+            <div className="space-y-4">
+              {servicesLoading ? (
+                <div className="h-36 flex items-center justify-center text-sm text-slate-500 space-x-2">
+                  <div
+                    className="w-10 h-10 border-4 border-amber-300 border-t-transparent rounded-full animate-spin"
+                    style={{ borderLeftColor: BRAND }}
+                  />
+                  <span>
+                    {t("book.loadingServices", {
+                      defaultValue: "جاري تحميل الخدمات...",
                     })}
-                  </h5>
-                  {!selectedService ? (
-                    <div className="rounded-2xl bg-amber-50 p-4 text-sm text-amber-800 border border-amber-100">
-                      {t("book.chooseServiceFirst", {
-                        defaultValue: "اختر الخدمة أولاً ليتم عرض الأوقات.",
-                      })}
-                    </div>
-                  ) : slotsLoading ? (
-                    <div className="h-32 flex flex-col items-center justify-center gap-2 text-sm text-slate-500">
-                      <div
-                        className="w-10 h-10 border-4 border-amber-300 border-t-transparent rounded-full animate-spin"
-                        style={{ borderRightColor: BRAND }}
-                      />
-                      {t("book.loadingSlots", {
-                        defaultValue: "جاري تحديث الأوقات...",
-                      })}
-                    </div>
-                  ) : slotsError ? (
-                    <div className="text-sm text-rose-600">{slotsError}</div>
-                  ) : availableSlots.length === 0 ? (
-                    <div className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-600 border border-slate-200">
-                      {slotDetails
-                        ? slotDetails
-                        : workingDay?.is_closed
-                        ? t("book.closed", {
-                            defaultValue: "الصالون مغلق في هذا اليوم.",
-                          })
-                        : t("book.noSlots", {
-                            defaultValue: "لا توجد أوقات متاحة في هذا اليوم.",
-                          })}
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-3 gap-3">
-                      {availableSlots.map((slot) => (
-                        <TimeSlot
-                          key={slot}
-                          value={slot}
-                          label={formatSlotLabel(slot, slotLocale)}
-                          selected={selectedTime === slot}
-                          onSelect={setSelectedTime}
-                        />
-                      ))}
-                    </div>
-                  )}
-
-                  {errors.time && (
-                    <p className="mt-3 text-sm text-rose-600 flex items-center gap-2">
-                      <span>⚠️</span>
-                      {errors.time}
-                    </p>
-                  )}
-
-                  {slotStrategy && (
-                    <p className="mt-4 text-xs text-slate-500 italic text-center">
-                      {t("book.slotStrategyInfo", {
-                        strategy: slotStrategy,
-                        defaultValue: "طريقة اختيار الأوقات: {strategy}",
-                      })}
-                    </p>
-                  )}
+                  </span>
                 </div>
+              ) : (
+                serviceOptions.map((item) => {
+                  const priceLabel =
+                    item.price || item.price === 0
+                      ? formatPriceLabel(item.price, t)
+                      : undefined;
+                  const currentPriceValue = parseNumberParam(item.price);
+                  const originalPriceValue = getOriginalPriceValue(item);
+                  const originalPriceLabel =
+                    shouldShowOriginalPrice(currentPriceValue, originalPriceValue)
+                      ? formatPriceLabel(originalPriceValue, t)
+                      : undefined;
+
+                  return (
+                    <ServiceCard
+                      key={item.id}
+                      service={item}
+                      selected={selectedServiceId === item.id}
+                      onSelect={handleServiceSelect}
+                      durationLabel={formatDurationLabel(
+                        item.duration_minutes,
+                        t
+                      )}
+                      priceLabel={priceLabel}
+                      originalPriceLabel={originalPriceLabel}
+                    />
+                  );
+                })
               )}
             </div>
+
+            {linkedServiceId && linkedServiceLoading && (
+              <p className="mt-4 text-sm text-slate-500 flex items-center gap-2">
+                <span className="w-4 h-4 border-2 border-amber-300 border-t-transparent rounded-full animate-spin inline-block" />
+                {t("book.loadingLinkedService", {
+                  defaultValue: "جاري تحميل الخدمة المختارة...",
+                })}
+              </p>
+            )}
+            {linkedServiceId && linkedServiceError && (
+              <p className="mt-4 text-sm text-rose-600 flex items-center gap-2">
+                <span>⚠️</span>
+                {linkedServiceError}
+              </p>
+            )}
+
+            {servicesError && (
+              <p className="mt-4 text-sm text-rose-600 flex items-center gap-2">
+                <span>⚠️</span>
+                {servicesError}
+              </p>
+            )}
+
+            {errors.service && (
+              <p className="mt-4 text-sm text-rose-600 flex items-center gap-2">
+                <span>⚠️</span>
+                {errors.service}
+              </p>
+            )}
           </div>
         )}
 
-        {/* Step 2: Personal Info */}
+        {/* Step 2: Employee Selection */}
         {currentStep === 2 && (
+          <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
+            <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+              <div className="w-2 h-6 rounded-full bg-amber-500"></div>
+              {t("book.chooseEmployee", { defaultValue: "اختر المصفف/الموظف (اختياري)" })}
+            </h4>
+            {!selectedService ? (
+              <div className="rounded-2xl bg-amber-50 p-4 text-sm text-amber-800 border border-amber-100">
+                {t("book.chooseServiceFirst", {
+                  defaultValue: "اختر الخدمة أولاً ليتم عرض الأوقات.",
+                })}
+              </div>
+            ) : (
+              <>
+                <p className="text-sm text-slate-600 mb-4">
+                  {t("book.staffAvailableTitle", {
+                    defaultValue: "طاقم العمل المتاح لهذه الخدمة:",
+                  })}
+                </p>
+                <div className="space-y-3">
+                  <EmployeeCard
+                    employee={{ id: null, name: t("book.anyEmployee", { defaultValue: "أي موظف" }) }}
+                    selected={!hasEmployeeFilter}
+                    allowAny
+                    onSelect={() => setSelectedEmployeeId(null)}
+                    brandColor={BRAND}
+                    fallbackLabel={t("book.anyEmployee", { defaultValue: "أي موظف" })}
+                  />
+                  {employeesLoading ? (
+                    <div className="h-20 flex items-center justify-center gap-2 text-sm text-slate-500">
+                      <div className="w-8 h-8 border-4 border-amber-300 border-t-transparent rounded-full animate-spin" />
+                      {t("book.loadingEmployees", {
+                        defaultValue: "جارٍ تحميل الفريق...",
+                      })}
+                    </div>
+                  ) : (
+                    serviceEmployees.map((employee) => (
+                      <EmployeeCard
+                        key={employee.id || employee.name}
+                        employee={employee}
+                        selected={String(selectedEmployeeId) === String(employee.id)}
+                        onSelect={(id) => setSelectedEmployeeId(id)}
+                        brandColor={BRAND}
+                        fallbackLabel={t("book.employeeFallback", { defaultValue: "أحد الفريق" })}
+                      />
+                    ))
+                  )}
+                </div>
+                {employeesError && (
+                  <p className="mt-4 text-sm text-rose-600 flex items-center gap-2">
+                    <span>⚠️</span>
+                    {employeesError}
+                  </p>
+                )}
+                {!employeesLoading && serviceEmployees.length === 0 && (
+                  <p className="mt-4 text-sm text-slate-500">
+                    {t("book.noEmployeesForService", {
+                      defaultValue: "لا يوجد موظفون مرتبطون بهذه الخدمة، سنقوم باختيار أي موظف متاح.",
+                    })}
+                  </p>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Step 3: Date & Time */}
+        {currentStep === 3 && (
+          <div className="bg-white rounded-3xl shadow-xl p-6 border border-slate-100">
+            <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+              <div className="w-2 h-6 rounded-full bg-amber-500"></div>
+              {t("book.chooseDateTime", { defaultValue: "اختر التاريخ والوقت" })}
+            </h4>
+
+            {!selectedService ? (
+              <div className="rounded-2xl bg-amber-50 p-4 text-sm text-amber-800 border border-amber-100">
+                {t("book.chooseServiceFirst", {
+                  defaultValue: "اختر الخدمة أولاً ليتم عرض الأوقات.",
+                })}
+              </div>
+            ) : (
+              <>
+                <div className="flex flex-wrap gap-3 mb-6 text-sm text-slate-600">
+                  <span className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-lg">
+                    <span>✂️</span>
+                    {selectedService?.name}
+                  </span>
+                  <span className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-lg">
+                    <span>👤</span>
+                    {selectedEmployeeLabel}
+                  </span>
+                </div>
+
+                <div className="mb-6">
+                  <CalendarHeader
+                    currentMonth={currentMonth}
+                    onPrevious={previousMonth}
+                    onNext={nextMonth}
+                    canGoPrevious={canGoPrevious()}
+                    canGoNext={canGoNext()}
+                  />
+
+                  <CalendarGrid
+                    month={currentMonth}
+                    selectedDate={selectedDate}
+                    onDateSelect={setSelectedDate}
+                    today={today}
+                  />
+
+                  {errors.date && (
+                    <p className="mt-3 text-sm text-rose-600 flex items-center gap-2">
+                      <span>⚠️</span>
+                      {errors.date}
+                    </p>
+                  )}
+                </div>
+
+                {selectedDate && (
+                  <div>
+                    <h5 className="font-semibold text-slate-800 mb-4">
+                      {t("book.availableTimes", {
+                        defaultValue: "الأوقات المتاحة",
+                      })}
+                    </h5>
+                    {slotsLoading ? (
+                      <div className="h-32 flex flex-col items-center justify-center gap-2 text-sm text-slate-500">
+                        <div
+                          className="w-10 h-10 border-4 border-amber-300 border-t-transparent rounded-full animate-spin"
+                          style={{ borderRightColor: BRAND }}
+                        />
+                        {t("book.loadingSlots", {
+                          defaultValue: "جاري تحديث الأوقات...",
+                        })}
+                      </div>
+                    ) : slotsError ? (
+                      <div className="text-sm text-rose-600">{slotsError}</div>
+                    ) : availableSlots.length === 0 ? (
+                      <div className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-600 border border-slate-200 space-y-2">
+                        <div>
+                          {slotDetails
+                            ? slotDetails
+                            : workingDay?.is_closed
+                            ? t("book.closed", {
+                                defaultValue: "الصالون مغلق في هذا اليوم.",
+                              })
+                            : t("book.noSlots", {
+                                defaultValue: "لا توجد أوقات متاحة في هذا اليوم.",
+                              })}
+                        </div>
+                        {hasEmployeeFilter && (
+                          <div className="text-amber-700">
+                            {t("book.noSlotsForEmployee", {
+                              defaultValue:
+                                "لا توجد أوقات متاحة لهذا الموظف. جرّب اختيار موظف آخر أو أي موظف متاح.",
+                            })}
+                            <div className="mt-2">
+                              <button
+                                type="button"
+                                onClick={() => setSelectedEmployeeId(null)}
+                                className="text-amber-700 font-semibold hover:underline"
+                              >
+                                {t("book.clearEmployeeFilter", { defaultValue: "إلغاء اختيار الموظف" })}
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-3 gap-3">
+                        {availableSlots.map((slot) => (
+                          <TimeSlot
+                            key={slot}
+                            value={slot}
+                            label={formatSlotLabel(slot, slotLocale)}
+                            selected={selectedTime === slot}
+                            onSelect={setSelectedTime}
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    {errors.time && (
+                      <p className="mt-3 text-sm text-rose-600 flex items-center gap-2">
+                        <span>⚠️</span>
+                        {errors.time}
+                      </p>
+                    )}
+
+                    {slotStrategy && (
+                      <p className="mt-4 text-xs text-slate-500 italic text-center">
+                        {t("book.slotStrategyInfo", {
+                          strategy: slotStrategy,
+                          defaultValue: "طريقة اختيار الأوقات: {strategy}",
+                        })}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Step 4: Personal Info */}
+        {currentStep === 4 && (
           <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
             <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
               <div className="w-2 h-6 rounded-full bg-amber-500"></div>
@@ -1351,8 +1607,8 @@ export default function BookingForm({ salonId }) {
           </div>
         )}
 
-        {/* Step 3: Confirmation (before submit) */}
-        {currentStep === 3 && !confirmation && (
+        {/* Step 5: Confirmation (before submit) */}
+        {currentStep === 5 && !confirmation && (
           <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
             <h4 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
               <div className="w-2 h-6 rounded-full bg-amber-500"></div>
@@ -1371,6 +1627,12 @@ export default function BookingForm({ salonId }) {
                       selectedService?.label ||
                       "الخدمة"}
                   </p>
+                </div>
+                <div>
+                  <span className="text-slate-500">
+                    {t("book.detail.employee", { defaultValue: "الموظف/المصفف:" })}
+                  </span>
+                  <p className="font-medium text-slate-800">{selectedEmployeeLabel}</p>
                 </div>
                 <div>
                   <span className="text-slate-500">التاريخ:</span>
@@ -1439,7 +1701,7 @@ export default function BookingForm({ salonId }) {
         <div className="flex justify-between items-center mt-12 max-w-2xl mx-auto">
           <button
             type="button"
-            onClick={prevStep}
+            onClick={goToPrevious}
             disabled={currentStep === 1}
             className={`
               px-6 py-3 rounded-xl font-medium transition-all duration-300
@@ -1453,15 +1715,15 @@ export default function BookingForm({ salonId }) {
             {t("book.previous", { defaultValue: "السابق" })}
           </button>
 
-          {currentStep < 3 ? (
+          {currentStep < totalSteps ? (
             <button
               type="button"
-              onClick={nextStep}
-              disabled={!selectedService || !selectedDate || !selectedTime}
+              onClick={goToNext}
+              disabled={isNextDisabled}
               className={`
                 px-8 py-3 rounded-xl font-semibold transition-all duration-300
                 ${
-                  !selectedService || !selectedDate || !selectedTime
+                  isNextDisabled
                     ? "bg-slate-200 text-slate-400 cursor-not-allowed"
                     : "bg-amber-500 text-white hover:bg-amber-600 shadow-lg hover:shadow-xl"
                 }

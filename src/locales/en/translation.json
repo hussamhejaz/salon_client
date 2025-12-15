@@ -91,6 +91,12 @@
     "loadingServices": "Loading services...",
     "loadingLinkedService": "Loading the selected service...",
     "chooseDateTime": "Choose a date & time",
+    "chooseEmployee": "Choose your stylist/employee (optional)",
+    "anyEmployee": "Any staff",
+    "loadingEmployees": "Loading team...",
+    "noEmployees": "No active team members available right now.",
+    "employeeFallback": "Team member",
+    "noEmployeesForService": "No team members available for this service right now. We’ll assign any available staff.",
     "availableTimes": "Available times",
     "chooseServiceFirst": "Select a service first to display available slots.",
     "loadingSlots": "Updating available time slots...",
@@ -110,6 +116,14 @@
     "statusPending": "Pending review",
     "newBooking": "Book another service",
     "confirmBooking": "Confirm Booking",
+    "staffAvailableTitle": "Staff available for this service",
+    "noSlotsForEmployee": "No slots are available for this staff member. Try a different team member or choose \"Any staff\".",
+    "clearEmployeeFilter": "Clear staff selection",
+    "stepService": "Service",
+    "stepEmployee": "Staff",
+    "stepDateTime": "Date & Time",
+    "stepInfo": "Details",
+    "stepConfirm": "Confirm",
     "step1": "Service & Time",
     "step2": "Personal Details",
     "step3": "Confirmation",
@@ -119,7 +133,8 @@
       "service": "Service:",
       "datetime": "Date & time:",
       "duration": "Duration:",
-      "status": "Status:"
+      "status": "Status:",
+      "employee": "Stylist/Employee:"
     }
   },
   "navigation": {
